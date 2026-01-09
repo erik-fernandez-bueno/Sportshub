@@ -18,23 +18,3 @@ header a {
   width: 30%;
   color: darkblue;
 }
-nav {
-  display: flex;
-  flex-direction: row;
-  padding-top: 3%;
-}
-nav a {
-  text-decoration: none;
-  color: darkblue;
-  font-size: 3vw;
-  margin-left: 4%;
-}
-nav img {
-  width: 60px;
-}
-#cesta {
-  width: 6vw;
-}
-#sesion {
-  width: 4vw;
-}
