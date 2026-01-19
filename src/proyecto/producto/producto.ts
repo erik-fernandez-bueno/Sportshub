@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import {MenuComponent} from '../menu/menu';
-import {NgOptimizedImage} from '@angular/common';
+import {RouterLink, RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-producto',
   imports: [
-    MenuComponent,
-    NgOptimizedImage
+    RouterModule,
   ],
   templateUrl: './producto.html',
   styleUrl: './producto.css',
