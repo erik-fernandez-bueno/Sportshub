@@ -1,0 +1,22 @@
+#confirmarcancelar {
+  width: 100%;
+  min-height: 80px;
+}
+
+.catalogob {
+  float: left;
+  display: flex;
+  flex-direction: row;
+  width: 25%;
+  margin: 2%;
+  font-size: 1vw;
+}
+
+.catalogob img {
+  width: 60%;
+  padding: 1%;
+}
+
+#cat {
+  margin-right: 40%;
+}
