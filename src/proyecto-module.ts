@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing-module';
+
 
 // Importa aquí todos los componentes de tus carpetas
 import { MenuComponent } from './proyecto/menu/menu';
@@ -16,7 +16,7 @@ import { RegisterComponent } from './proyecto/register/register';
 @NgModule({
   imports: [
     BrowserModule,
-    AppRoutingModule
+
   ],
   bootstrap: [] // o HomeComponent como inicio
 })

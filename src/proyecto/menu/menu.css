@@ -11,19 +11,30 @@ header {
 }
 header img {
   width: 12vw;
+  height: 8vw;
   float: left;
+  margin-top: 1vw;
 }
 header a {
   text-decoration: none;
   width: 30%;
   color: darkblue;
 }
+#img_cesta {
+  height: 3.7vw;
+  width: 4vw;
+}
+
+#img_sesion {
+  height: 3.7vw;
+  width: 4vw;
+}
 
 /*menu*/
 nav {
   display: flex;
   flex-direction: row;
-  padding-top: 3%;
+  padding-top: 3.5vw;
 }
 nav a {
   text-decoration: none;
