@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Registre</title>
-  <link type="text/css" rel="stylesheet" href="register.css">
-</head>
-<body>
 <aside>
   <div class="registeraside">
-    <img class="registerasideimg" src="../../asets/Register.png" alt="">
+    <img class="registerasideimg" src="/assets/Register.png" alt="">
   </div>
 </aside>
 <section class="registersection">
@@ -20,8 +12,6 @@
     <input class="registerformsectioninput" type="text" id="foradreça" name="adreça" value="" placeholder="Adreça"> <br>
     <input class="registerformsectioninput" type="text" id="fortelefon" name="telefon" value="" placeholder="Telèfon"> <br>
     <button class="registerformsectionbutton" type="submit"> CONTINUAR </button>
-    <p class="registerformsectiontext">Ja tens un compte? <a class="linktext" href="Login.html">Iniciar Sessió</a></p>
+    <p class="registerformsectiontext">Ja tens un compte? <a [routerLink]="['/login']" class="linktext">Iniciar Sessió</a></p>
   </form>
 </section>
-</body>
-</html>
