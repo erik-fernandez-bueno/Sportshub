@@ -3,15 +3,15 @@ import {MenuComponent} from '../menu/menu';
 import {NgOptimizedImage} from '@angular/common';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-hombre',
   imports: [
     MenuComponent,
     NgOptimizedImage
   ],
-  templateUrl: './home.html',
-  styleUrl: './home.css',
+  templateUrl: './hombre.html',
+  styleUrl: './hombre.css',
   standalone: true,
 })
-export class HomeComponent {
+export class HombreComponent {
 
 }

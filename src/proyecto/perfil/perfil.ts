@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import {Menu} from '../menu/menu';
+import {MenuComponent} from '../menu/menu';
 
 @Component({
   selector: 'app-perfil',
   imports: [
-    Menu
+    MenuComponent
   ],
   templateUrl: './perfil.html',
   styleUrl: './perfil.css',
+  standalone: true,
 })
-export class Perfil {
+export class PerfilComponent {
 
 }

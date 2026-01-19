@@ -1,0 +1,183 @@
+#precioproducto {
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px 40px;
+  background: #f0f5ff;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+
+#precioproducto  img {
+  height: auto;
+  width: auto;
+  max-width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 10px;
+  flex-shrink: 0; /* evita que se reduzca */
+}
+
+
+#precioproducto > .contenido-derecha {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+
+
+
+
+
+#precioproducto h1 {
+  color: #1e3a8a; /* azul oscuro */
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+
+#precioproducto p {
+  color: #3b82f6; /* azul brillante */
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+
+#precioproducto .opciones {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+
+#precioproducto .opciones input[type="radio"] {
+  display: none;
+}
+
+
+#precioproducto .opcion-label {
+  cursor: pointer;
+  padding: 8px 14px;
+  border: 2px solid #3b82f6;
+  border-radius: 6px;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+
+#precioproducto .opciones input[type="radio"]:checked + .opcion-label {
+  background-color: #1e40af;
+  color: white;
+  border-color: #1e40af;
+}
+
+
+
+
+#precioproducto h2 {
+  font-size: 1.6rem;
+  color: #1e40af;
+  margin: 0;
+  font-weight: 700;
+}
+
+
+
+
+#precioproducto button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  max-width: 220px;
+}
+
+
+#precioproducto button:hover {
+  background-color: #1e40af;
+}
+
+
+/* Details */
+#precioproducto details {
+  background-color: #dbeafe; /* azul muy claro */
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #1e3a8a;
+  border: 1px solid #93c5fd;
+}
+
+
+#precioproducto summary {
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}
+
+
+#precioproducto h4 {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+
+#precioproducto h5 {
+  margin: 10px 0 4px 0;
+  font-weight: 600;
+  color: #1e40af;
+}
+
+
+#precioproducto details p {
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+
+.opciones {
+  display: flex;
+}
+
+
+input[type="radio"] {
+  display: none;
+}
+
+
+.opcion-label {
+  display: block;
+  padding: 15px;
+  border: 1px solid black;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+
+.opcion-label:hover {
+  background-color: #007BFF;
+  border-color: #007BFF;
+  color: white;
+}
+
+
+input[type="radio"]:checked + .opcion-label {
+  background-color: #007BFF;
+  color: white;
+  border-color: #007BFF;
+}
+
+
+input[type="radio"]:focus + .opcion-label {
+  outline: 2px solid #007BFF;
+}

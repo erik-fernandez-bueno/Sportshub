@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import {Menu} from '../menu/menu';
+import {MenuComponent} from '../menu/menu';
 
 @Component({
   selector: 'app-login',
   imports: [
-    Menu
+    MenuComponent
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
+  standalone: true,
 })
-export class Login {
+export class LoginComponent {
 
 }

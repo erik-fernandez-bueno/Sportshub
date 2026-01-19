@@ -1,0 +1,168 @@
+#productos {
+  width: 100%;
+  padding: 10px 15px;
+  background: #f0f5ff; /* azul muy claro */
+  border-radius: 0; /* sin bordes redondeados para no generar espacios */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+.producto {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: white;
+  padding: 12px 15px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+
+
+
+
+
+.producto div:first-child img {
+  width: 160px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+
+.producto div:first-child img:hover {
+  transform: scale(1.05);
+}
+
+
+.textoproducto a {
+  color: #1e3a8a;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.1rem;
+  word-break: break-word;
+}
+
+
+.producto div:last-child {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  min-width: 120px;
+}
+
+
+.producto p {
+  color: #2563eb;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+}
+
+
+.producto button {
+  margin-top: 0;
+  margin-right: 0;
+
+
+  height: 30px;
+  width: 30px;
+  /*background-image: url("assets/papeleraroja.png");*/
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+
+  border: none;
+  color: transparent;
+  cursor: pointer;
+  padding: 0;
+
+
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+
+/*.producto button:hover {
+  background-image: url("assets/papeleranegra.jpg");
+}
+*/
+
+#precios {
+  width: 100%;
+  padding: 15px 20px;
+  background: #dbeafe; /* azul muy claro */
+  border-radius: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+#precios h2 {
+  color: #1e3a8a;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+
+#precios p {
+  color: #2563eb;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 20px 0 0;
+  white-space: nowrap;
+}
+
+
+#precios button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+
+#precios button:hover {
+  background-color: #1e40af;
+}
+
+
+/* Contenedor confirmarcancelar (vacío) para futuras acciones */
+#confirmarcancelar {
+  width: 100%;
+  min-height: 80px;
+}
+
+.catalogob {
+  float: left;
+  display: flex;
+  flex-direction: row;
+  width: 25%;
+  margin: 2%;
+  font-size: 1vw;
+}
+
+.catalogob img {
+  width: 60%;
+  padding: 1%;
+}
+
+#cat {
+  margin-right: 40%;
+}

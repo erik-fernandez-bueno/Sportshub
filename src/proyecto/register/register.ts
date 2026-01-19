@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import {Menu} from '../menu/menu';
+import {MenuComponent} from '../menu/menu';
 
 @Component({
   selector: 'app-register',
   imports: [
-    Menu
+    MenuComponent
   ],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-export class Register {
+export class RegisterComponent {
 
 }

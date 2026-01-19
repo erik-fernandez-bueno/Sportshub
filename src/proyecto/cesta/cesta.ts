@@ -3,15 +3,14 @@ import {MenuComponent} from '../menu/menu';
 import {NgOptimizedImage} from '@angular/common';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-cesta',
   imports: [
     MenuComponent,
     NgOptimizedImage
   ],
-  templateUrl: './home.html',
-  styleUrl: './home.css',
-  standalone: true,
+  templateUrl: './cesta.html',
+  styleUrl: './cesta.css',
 })
-export class HomeComponent {
+export class CestaComponent {
 
 }
