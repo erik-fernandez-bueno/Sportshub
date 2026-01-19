@@ -1,0 +1,191 @@
+@media screen and (min-width: 0px) and (max-width: 760px) {
+
+  /* Register i Login */
+
+  /* ------------- Perfil -------------- */
+
+  .profileaside {
+    display: none;
+    width: 0;
+    height: 0;
+    padding-top: 0;
+    float: none;
+    position: relative;
+    object-fit: none;
+  }
+
+  .profileasideimg {
+    display: none;
+  }
+
+  .profilesection {
+    margin-left: 0;
+    text-align: left;
+    padding: 5%;
+  }
+
+  #profileh1section {
+    text-align: center;
+    color: darkblue;
+    font-size: 8vw;
+    margin-bottom: 6%;
+  }
+
+  .profileinfo {
+    margin-left: 0;
+    font-size: 18px;
+    line-height: 1.8em;
+    color: #222;
+  }
+
+  .profileinfo p {
+    margin-bottom: 5%;
+  }
+
+  .profilebuttons {
+    text-align: center;
+    margin-top: 10%;
+  }
+
+  .profilebutton {
+    background-color: darkblue;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    width: 90%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    font-size: 18px;
+    margin-bottom: 4%;
+    cursor: pointer;
+  }
+
+  .profilebutton.logout {
+    background-color: #b00020;
+  }
+
+  .profilebutton:hover {
+    opacity: 0.9;
+  }
+
+  .registerasideimg {
+    display: none;
+  }
+
+  .registeraside {
+    padding-top: 0;
+    width: 0;
+    height: 0;
+    float: none;
+    display: none;
+    object-fit: none;
+    position: relative;
+  }
+
+  .registersection {
+    margin-left: 0;
+    text-align: left;
+  }
+
+  #registerh1section {
+    padding-top: 3%;
+    margin-left: 5%;
+  }
+
+  .registerformsectiontext {
+    text-align: left;
+    margin-left: 5%;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .registerformsectioninput {
+    padding-left: 5%;
+    text-align: left;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: 40%;
+  }
+
+  .registerformsectionbutton {
+    background-color: darkblue;
+    color: white;
+    font-weight: bold;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    padding-left: 29%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: 28%;
+  }
+}
+/*Ordinador*/
+
+@media screen and (min-width: 761px) {
+
+  /* ------------- Register & Login -------------- */
+
+  .profileaside {
+    padding-top: 2%;
+    width: 50%;
+    height: 100%;
+    float: left;
+    display: flex;
+    object-fit: cover;
+    position: absolute;
+  }
+
+  .profileasideimg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .profilesection {
+    text-align: left;
+    margin-left: 55%;
+    padding-top: 3%;
+  }
+
+  #profileh1section {
+    margin-left: 5%;
+    color: darkblue;
+  }
+
+  .profileinfo {
+    margin-left: 5%;
+    font-size: 1.2em;
+    line-height: 2em;
+    color: #222;
+  }
+
+  .profilebuttons {
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+
+  .profilebutton {
+    background-color: darkblue;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 0.8em 2.4em;
+    margin-right: 2%;
+    cursor: pointer;
+  }
+
+  .profilebutton.logout {
+    background-color: #b00020;
+    margin-right: 0;
+  }
+
+  .profilebutton:hover {
+    opacity: 0.9;
+  }
+}
