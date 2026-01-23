@@ -39,4 +39,19 @@ export class CestaComponent implements OnInit {
     this.cartService.clearCart();
     this.cart = [];
   }
+  increaseQuantity(item: CartProduct) {
+    item.quantity++;
+  }
+
+  decreaseQuantity(item: CartProduct) {
+    if (item.quantity > 1) {
+      item.quantity--;
+    }
+  }
+
+  setQuantity(item: CartProduct, value: string) {
+    const quantity = parseInt(value);
+    item.quantity = quantity > 0 ? quantity : 1;
+  }
+
 }

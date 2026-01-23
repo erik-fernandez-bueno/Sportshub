@@ -14,7 +14,16 @@
 
     <div>
       <p>{{ item.price }} €</p>
-      <p>Cantidad: {{ item.quantity }}</p>
+
+      <div class="counter">
+        <input
+          type="number"
+          [value]="item.quantity"
+          min="1"
+          (change)="setQuantity(item, $event.target.value)"
+        />
+      </div>
+
       <button (click)="removeFromCart(item)">Eliminar</button>
     </div>
 

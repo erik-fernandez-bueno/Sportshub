@@ -18,10 +18,11 @@ export class Listaproductos {
     },
     {
       id: 2,
-      name: 'Sudadera Angular',
-      price: 40,
-      image: 'assets/img/sudadera.jpg',
-      description: 'Sudadera con capucha'
+      name: 'Bicicleta',
+      price: 1200,
+      image: 'assets/Bicicletademontanya29.jpg',
+      description: 'Tienen dos ruedas.',
+      size:  []
     }
   ];
 }
