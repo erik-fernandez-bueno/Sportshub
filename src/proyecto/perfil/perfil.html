@@ -1,5 +1,15 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil d'usuari</title>
+  <link type="text/css" rel="stylesheet" href="perfil.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
 <aside class="profileaside">
-  <img class="profileasideimg" src="assets/Perfil.png" alt="Imatge perfil">
+  <img class="profileasideimg" src="../../asets/Perfil.png" alt="Imatge perfil">
 </aside>
 <section class="profilesection">
   <h1 id="profileh1section"> El meu perfil </h1>
@@ -17,4 +27,83 @@
     <button class="profilebutton logout">Tancar sessió</button>
   </div>
 
+  <div class="offcanvas offcanvas-start show" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasLabel">Benvingut!</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      Benvingut al teu perfil, aqui pots veure la teva informació.
+
+      <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="../../asets/login.png" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../../asets/Register.png" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../../asets/Perfil.png" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      <br><br><br>
+
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Futbol
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <strong>Què és el futbol?</strong> El futbol és un esport d'equip que es juga entre dos conjunts d'11 jugadors, l'objectiu dels quals és marcar gols introduint una pilota a la porteria contrària usant principalment els peus, i no les mans ni els braços (excepte el porter a la seva àrea). És l'esport més popular del món i es juga en un camp rectangular amb porteries a cada extrem; un partit estàndard consta de dos temps de 45 minuts.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Basquet
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <strong>Què és el basquet?</strong> El bàsquet, o bàsquet, és un esport d'equip en què dos equips de cinc jugadors intenten anotar punts llançant una pilota per un cèrcol a la pista de l'equip contrari. Guanya l'equip que aconsegueixi més punts al final del partit, que es juga a quatre quarts. Els jugadors han de botar la pilota per desplaçar-se i no poden córrer amb ell a les mans.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Tenis
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <strong>Què és el tenis</strong> El tennis és un esport de raqueta que es juga en una pista rectangular dividida per una xarxa. L'objectiu és colpejar una pilota amb la raqueta perquè passi per sobre de la xarxa i caigui al camp de l'oponent, que al seu torn l'ha de tornar correctament. Es pot jugar de manera individual (un contra un) o en parelles (dobles).
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
+</body>
+</html>
