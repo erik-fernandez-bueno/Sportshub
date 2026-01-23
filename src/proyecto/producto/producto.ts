@@ -28,7 +28,8 @@ export class ProductoComponent implements OnInit {
       description: 'Ofrecen un talle alto que te da libertad de movimiento, 3 bolsillos prácticos y una cinta para tu cepillo.',
       price: 44.99,
       image: 'assets/Pantalonvaquerohombre.jpg',
-      size: ['38', '40', '42', '44', '46', '48']
+      size: ['38', '40', '42', '44', '46', '48'],
+      category: 'pantalon'
     },
     {
       id: 2,
@@ -36,7 +37,8 @@ export class ProductoComponent implements OnInit {
       price: 1200,
       image: 'assets/Bicicletademontanya29.jpg',
       description: 'Tienen dos ruedas.',
-      size:  []
+      size:  [],
+      category: 'vehiculo'
     }
   ];
 
