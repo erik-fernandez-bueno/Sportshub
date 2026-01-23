@@ -32,11 +32,11 @@ export class ProductoComponent implements OnInit {
     },
     {
       id: 2,
-      name: 'Sudadera Angular',
-      description: 'Sudadera con capucha',
-      price: 40,
-      image: 'assets/img/sudadera.jpg',
-      size: []
+      name: 'Bicicleta',
+      price: 1200,
+      image: 'assets/Bicicletademontanya29.jpg',
+      description: 'Tienen dos ruedas.',
+      size:  []
     }
   ];
 
