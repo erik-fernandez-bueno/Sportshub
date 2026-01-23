@@ -1,45 +1,28 @@
 <div id="productos">
-  <div class="producto">
+  <div class="producto" *ngFor="let item of cart">
+
     <div>
-      <a href=""><img src="assets/ZapatillasRunningKIPRUN.jpg" alt=""></a>
+      <a href="">
+        <img [src]="item.image" [alt]="item.name">
+      </a>
     </div>
+
     <div class="textoproducto">
-      <a href="">Zapatillas Running KIPRUN KS500.2 Mujer - Gris y Coral</a>
+      <a href="">{{ item.name }}</a>
+      <p *ngIf="item.selectedSize">Talla: {{ item.selectedSize }}</p>
     </div>
+
     <div>
-      <p>34,99 €</p><br>
-      <button></button><br>
+      <p>{{ item.price }} €</p>
+      <p>Cantidad: {{ item.quantity }}</p>
+      <button (click)="removeFromCart(item)">Eliminar</button>
     </div>
-  </div><br>
-  <div class="producto">
-    <div>
-      <a href=""><img src="assets/Bicicletademontanya29.jpg" alt=""></a>
-    </div>
-    <div class="textoproducto">
-      <a>Bicicleta de montaña 29" carbono Rockrider Race 740 azul NX/GX Eagle</a>
-    </div>
-    <div>
-      <p>1299,99 €</p><br>
-      <button></button><br>
-    </div>
-  </div><br>
-  <div class="producto">
-    <div>
-      <a href="proyecto/producto/producto.html"><img src="assets/Pantalonvaquerohombre.jpg" alt=""></a>
-    </div>
-    <div class="textoproducto">
-      <a href="proyecto/producto/producto.html">Pantalón vaquero resistente Hombre Simond Vertika</a><br>
-    </div>
-    <div>
-      <p>44,99 €</p>
-      <button></button><br>
-    </div>
+
   </div>
 </div>
+
 <div id="precios">
   <h2>Total:</h2>
-  <p>1.379,97</p>
-  <button> Comprar</button>
-</div>
-<div id="confirmarcancelar">
+  <p>{{ getTotal() | number:'1.2-2' }} €</p>
+  <button (click)="buy()">Comprar</button>
 </div>
