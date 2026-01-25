@@ -42,3 +42,20 @@ nav a {
   font-size: 3vw;
   margin-left: 4%;
 }
+
+.nom-usuari {
+  font-size: 1.3vw;
+  font-weight: 600;
+  color: black;
+  margin-left: 5px;
+}
+
+#img_sesion {
+  width: 40px;
+  height: auto;
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+}

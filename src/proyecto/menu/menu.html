@@ -10,6 +10,18 @@
   <a>Nen</a>
   <a>Unisex</a>
   <a [routerLink]="['/cesta']"><img id="img_cesta" src="./assets/cesta.png" alt="" height="683" width="1024"></a>
-  <a [routerLink]="['/register']"><img id="img_sesion" src="./assets/inicio_sesion.png" alt="" height="800"
-                                                 width="800"></a>
+
+  <ng-container *ngIf="usuariLoguejat; else noLoguejat">
+    <a [routerLink]="['/perfil']" class="user-link">
+      <img id="img_sesion" src="./assets/usuarilogin.png" alt="Perfil" height="800" width="800">
+      <span class="nom-usuari">{{ usuariLoguejat.nom }}</span>
+    </a>
+  </ng-container>
+
+  <ng-template #noLoguejat>
+    <a [routerLink]="['/login']">
+      <img id="img_sesion" src="./assets/inicio_sesion.png" alt="Login" height="800" width="800">
+    </a>
+  </ng-template>
+
 </nav>

@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Inici de sessió</title>
-  <link rel="stylesheet" type="text/css" href="login.css">
-</head>
-<body>
 <aside>
   <div class="registeraside">
-    <img class="registerasideimg" src="../../asets/login.png" alt="">
+    <img class="registerasideimg" src="assets/login.png" alt="">
   </div>
 </aside>
 <section class="registersection">
   <h1 id="registerh1section"> Inici de sessió </h1>
   <form class="registerformsection">
-    <input class="registerformsectioninput" type="text" id="fornom" name="nom" value="" placeholder="Nom"> <br>
-    <input class="registerformsectioninput" type="password" id="forpass" name="password" value="" placeholder="Contrasenya"> <br>
-    <button class="registerformsectionbutton" type="submit"> CONTINUAR </button> <br>
-    <p class="registerformsectiontext">No tens un compte? <a class="linktext" href="Register.html">Crear</a></p>
+    <input [(ngModel)]="dadesLogin.nom" class="registerformsectioninput" type="text" id="fornom" name="nom" value="" placeholder="Nom"> <br>
+    <input [(ngModel)]="dadesLogin.password" class="registerformsectioninput" type="password" id="forpass" name="password" value="" placeholder="Contrasenya"> <br>
+    <button (click)="iniciarSessio()" class="registerformsectionbutton" type="submit"> CONTINUAR </button> <br>
+    <p class="registerformsectiontext">No tens un compte? <a [routerLink]="['/register']" class="linktext" >Crear</a></p>
+    <p *ngIf="mensaje" [style.color]="mensaje.includes('correcte') ? 'green' : 'red'">
+      {{ mensaje }}
+    </p>
   </form>
 </section>
-</body>
-</html>
+

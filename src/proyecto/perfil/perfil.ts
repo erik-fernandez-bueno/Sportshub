@@ -1,17 +1,33 @@
-import { Component } from '@angular/core';
-import {MenuComponent} from '../menu/menu';
-import {RouterLink} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-perfil',
   imports: [
-    MenuComponent,
-    RouterLink
+    CommonModule
   ],
   templateUrl: './perfil.html',
   styleUrl: './perfil.css',
   standalone: true,
 })
-export class PerfilComponent {
+export class PerfilComponent implements OnInit{
+  usuari: any = null;
 
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    const dades = localStorage.getItem('usuariLoguejat');
+
+    if (dades) {
+      this.usuari = JSON.parse(dades);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  tancarSessio() {
+    localStorage.removeItem('usuariLoguejat');
+    this.router.navigate(['/login']);
+  }
 }

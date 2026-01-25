@@ -5,13 +5,14 @@
 </aside>
 <section class="registersection">
   <h1 id="registerh1section"> Crea el teu compte </h1>
-  <form class="registerformsection">
-    <input class="registerformsectioninput" type="text" id="fornom" name="nom" value="" placeholder="Nom"> <br>
-    <input class="registerformsectioninput" type="text" id="forcognom" name="cognom" value="" placeholder="Cognom"> <br>
-    <input class="registerformsectioninput" type="password" id="forpass" name="password" value="" placeholder="Contrasenya"> <br>
-    <input class="registerformsectioninput" type="text" id="foradreça" name="adreça" value="" placeholder="Adreça"> <br>
-    <input class="registerformsectioninput" type="text" id="fortelefon" name="telefon" value="" placeholder="Telèfon"> <br>
-    <button class="registerformsectionbutton" type="submit"> CONTINUAR </button>
+  <form class="registerformsection" #registerForm="ngForm">
+    <input [(ngModel)]="nouUsuari.nom" class="registerformsectioninput" type="text" id="fornom" name="nom" placeholder="Nom" required> <br>
+    <input [(ngModel)]="nouUsuari.cognom" class="registerformsectioninput" type="text" id="forcognom" name="cognom" placeholder="Cognom" required> <br>
+    <input [(ngModel)]="nouUsuari.password" class="registerformsectioninput" type="password" id="forpass" name="password" placeholder="Contrasenya" required> <br>
+    <input [(ngModel)]="nouUsuari.adreca" class="registerformsectioninput" type="text" id="foradreça" name="adreça" placeholder="Adreça"> <br>
+    <input [(ngModel)]="nouUsuari.telefon" class="registerformsectioninput" type="text" id="fortelefon" name="telefon" placeholder="Telèfon"> <br>
+    <button (click)="registrar()" class="registerformsectionbutton" type="submit"> CONTINUAR </button>
     <p class="registerformsectiontext">Ja tens un compte? <a [routerLink]="['/login']" class="linktext">Iniciar Sessió</a></p>
+    <p *ngIf="mensaje">{{ mensaje }}</p>
   </form>
 </section>
