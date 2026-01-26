@@ -7,11 +7,11 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-producto',
-  standalone: true,            // 👈 OBLIGATORIO
+  standalone: true,
   templateUrl: './producto.html',
   styleUrls: ['./producto.css'],
   imports: [
-    CommonModule,              // 👈 ngIf / ngFor
+    CommonModule,
     FormsModule
   ]
 })
@@ -19,7 +19,6 @@ export class ProductoComponent implements OnInit {
 
   product: any;
   selectedSize: string | null = null;
-
 
   products = [
     {

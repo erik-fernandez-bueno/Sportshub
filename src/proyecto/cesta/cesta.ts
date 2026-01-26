@@ -4,11 +4,11 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-cesta',
-  standalone: true,          // 👈 OBLIGATORIO
+  standalone: true,
   templateUrl: './cesta.html',
   styleUrls: ['./cesta.css'],
   imports: [
-    CommonModule,            // 👈 ngFor / ngIf
+    CommonModule,
     DecimalPipe
   ]
 })
