@@ -1,21 +1,21 @@
 <div id="productos">
-  <div class="producto" *ngFor="let item of cart">
+  <div class="producto" *ngFor="let item of cart" [routerLink]="['/producto', item.id]">
 
-    <div>
-      <a href="">
+    <div >
+      <a>
         <img [src]="item.image" [alt]="item.name">
       </a>
     </div>
 
-    <div class="textoproducto">
-      <a href="">{{ item.name }}</a>
+    <div class="textoproducto" >
+      <a >{{ item.name }}</a>
       <p *ngIf="item.selectedSize">Talla: {{ item.selectedSize }}</p>
     </div>
 
     <div>
       <p>{{ item.price }} €</p>
 
-      <div class="counter">
+      <div class="counter" (click)="$event.stopPropagation()">
         <input
           type="number"
           [value]="item.quantity"
@@ -24,7 +24,7 @@
         />
       </div>
 
-      <button (click)="removeFromCart(item)">Eliminar</button>
+      <button (click)="$event.stopPropagation(); removeFromCart(item)">Eliminar</button>
     </div>
 
   </div>

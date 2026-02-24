@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-hombre',
+  selector: 'app-nen',
   standalone: true,
   imports: [
     MenuComponent,
@@ -15,10 +15,10 @@ import { FormsModule } from '@angular/forms';
     NgFor,
     NgIf
   ],
-  templateUrl: './hombre.html',
-  styleUrls: ['./hombre.css'],
+  templateUrl: './nen.html',
+  styleUrls: ['./nen.css'],
 })
-export class HombreComponent {
+export class NenComponent {
 
   categorias: string[] = ['Pantalones', 'Camisetas', 'Zapatillas','vehiculo','Bicicleta'];
 
@@ -26,38 +26,14 @@ export class HombreComponent {
 
   productos = [
     {
-      id: 8,
-      price: 35,
-      nombre: "Guantes de Boxeo",
-      descripcion: "Guantes acolchados para seguridad y confort en boxeo.",
-      imagen: "assets/guantes_boxeo.jpg",
-      categoria: ["Deportes de contacto"]
-    },
-    {
-      id: 11,
-      price: 44.99,
-      nombre: "Pantalón vaquero resistente Hombre Simond Vertika",
-      descripcion: "Ofrecen un talle alto, 3 bolsillos prácticos y una cinta para tu cepillo.",
-      imagen: "assets/Pantalonvaquerohombre.jpg",
-      categoria: ["Pantalones"]
-    },
-    {
-      id: 12,
-      price: 1200,
-      nombre: "Bicicleta",
-      descripcion: "Bicicleta de montaña con dos ruedas resistente.",
-      imagen: "assets/Bicicletademontanya29.jpg",
-      categoria: ["vehiculo" ,"Bicicleta"]
-    },
-    {
       id: 13,
       price: 30,
       nombre: "Zapatillas Running Hombre",
       descripcion: "Amortiguación avanzada y máxima comodidad.",
       imagen: "assets/ZapatillasRunningKIPRUN.jpg",
-      categoria: ["Zapatillas"]
+      categoria: "Zapatillas"
     }
-  ];
+    ];
 
   productosFiltrados = [...this.productos];
 

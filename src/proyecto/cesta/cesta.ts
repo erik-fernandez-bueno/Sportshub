@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService, CartProduct } from '../services/cart.service';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-cesta',
@@ -9,7 +10,8 @@ import { CommonModule, DecimalPipe } from '@angular/common';
   styleUrls: ['./cesta.css'],
   imports: [
     CommonModule,
-    DecimalPipe
+    DecimalPipe,
+    RouterLink
   ]
 })
 export class CestaComponent implements OnInit {

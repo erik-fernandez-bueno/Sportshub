@@ -7,7 +7,6 @@
     <h1>{{ product.name }}</h1>
     <p>{{ product.description }}</p>
 
-    <!-- TALLAS -->
     <div class="opciones" *ngIf="product.size?.length > 0">
 
 
@@ -32,8 +31,9 @@
       Afegir a la cistella
     </button>
 
-    <p>Talla seleccionada: {{ selectedSize }}</p>
-
+    <p *ngIf="product.size?.length > 0 && selectedSize">
+      Talla seleccionada: {{ selectedSize }}
+    </p>
   </div>
 
 </aside>

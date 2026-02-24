@@ -7,8 +7,8 @@
 <nav>
   <a [routerLink]="['/hombre']" [queryParams]="{id: 42}">Home</a>
   <a [routerLink]="['/mujer']">Dona</a>
-  <a>Nen</a>
-  <a>Unisex</a>
+  <a [routerLink]="['/nen']">Nen</a>
+  <a [routerLink]="['/unisex']">Unisex</a>
   <a [routerLink]="['/cesta']"><img id="img_cesta" src="./assets/cesta.png" alt="" height="683" width="1024"></a>
 
   <ng-container *ngIf="usuariLoguejat; else noLoguejat">

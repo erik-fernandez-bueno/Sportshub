@@ -1,3 +1,38 @@
+<div class="catalogo-header">
+  <h1 id="cat">Catàleg mujer</h1>
 
-<p>mujer works!</p>
+  <select [(ngModel)]="categoriaSeleccionada" (change)="filtrarProductos()">
+    <option value="todas">Todas</option>
+    <option *ngFor="let categoria of categorias" [value]="categoria">
+      {{ categoria }}
+    </option>
+  </select>
+</div>
 
+<div *ngIf="productosFiltrados.length > 0; else noProductos" class="catalogo">
+  <div
+    *ngFor="let producto of productosFiltrados"
+    [routerLink]="['/producto', producto.id]"
+    class="catalogob"
+  >
+    <img
+      [ngSrc]="producto.imagen"
+      width="300"
+      height="300"
+      class="card-img-top"
+      [alt]="producto.nombre"
+    >
+    <div class="card-body">
+      <h5>{{ producto.nombre }}</h5>
+      <p>{{ producto.descripcion }}</p>
+      <p class="precio">Precio: {{ producto.price }} €</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #noProductos>
+  <div class="no-productos">
+    <img src="assets/source.gif" alt="No hay productos" class="no-productos-img">
+    <p>No hay productos disponibles.</p>
+  </div>
+</ng-template>
