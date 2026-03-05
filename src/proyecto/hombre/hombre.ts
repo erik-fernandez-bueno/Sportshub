@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./hombre.css'],
 })
 export class HombreComponent {
+  selectedCategory: any;
 
   categorias: string[] = ['Pantalones', 'Camisetas', 'Zapatillas','vehiculo','Bicicleta'];
 

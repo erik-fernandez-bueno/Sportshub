@@ -2,52 +2,32 @@ import { Component } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [
-    RouterLink,
-    CommonModule,
-    FormsModule,
-    RouterModule
-  ],
+  standalone: true,
+  imports: [RouterLink, CommonModule, FormsModule, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
-  standalone: true,
 })
+
 export class LoginComponent {
   mensaje: string = "";
+  dadesLogin = { email: '', password: '' };
 
-  dadesLogin = {
-    nom: '',
-    cognom: '',
-    password: '',
-    adreca: '',
-    telefon: ''
-  };
-
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   iniciarSessio() {
-
-    const dadesGuardades = localStorage.getItem(this.dadesLogin.nom);
-
-    if (dadesGuardades) {
-      const usuari = JSON.parse(dadesGuardades);
-
-      if (usuari.password === this.dadesLogin.password) {
+    this.authService.login(this.dadesLogin).subscribe({
+      next: (usuari) => {
         localStorage.setItem('usuariLoguejat', JSON.stringify(usuari));
-        this.mensaje = "Login correcte! Benvingut " + usuari.nom;
-
-        setTimeout(() => {
-          this.router.navigate(['/perfil']);
-        }, 1000);
-
-      } else {
-        this.mensaje = "Contrasenya incorrecta.";
+        this.mensaje = "Login correcte! Benvingut ";
+        setTimeout(() => this.router.navigate(['/perfil']), 1000);
+      },
+      error: (err) => {
+        this.mensaje = "Error: " + (err.status === 401 ? "Credencials incorrectes" : "Servidor desconnectat");
       }
-    } else {
-      this.mensaje = "L'usuari no existeix.";
-    }
+    });
   }
 }

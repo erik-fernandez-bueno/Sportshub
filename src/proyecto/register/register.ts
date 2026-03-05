@@ -1,21 +1,18 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Usuaris } from '../usuaris';
+import { AuthService } from '../auth.service';
 
 
 @Component({
   selector: 'app-register',
-  imports: [
-    RouterLink,
-    CommonModule,
-    FormsModule,
-    RouterModule
-  ],
+  standalone: true,
+  imports: [RouterLink, CommonModule, FormsModule, RouterModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
+
 export class RegisterComponent {
   mensaje: string = "";
 
@@ -23,27 +20,27 @@ export class RegisterComponent {
     nom: '',
     cognom: '',
     password: '',
+    email: '',
     adreca: '',
     telefon: ''
   };
 
-  constructor(private usuaris: Usuaris) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   registrar() {
-    if (!this.nouUsuari.nom || !this.nouUsuari.password) {
-      this.mensaje = 'El nom i la contrasenya són obligatoris';
+    if (!this.nouUsuari.nom || !this.nouUsuari.password || !this.nouUsuari.email) {
+      this.mensaje = 'El nom, correu i la contrasenya són obligatoris';
       return;
     }
 
-    const usuariExistent = localStorage.getItem(this.nouUsuari.nom);
-
-    if (usuariExistent) {
-      this.mensaje = 'Aquest usuari ja existeix!';
-    } else {
-      localStorage.setItem(this.nouUsuari.nom, JSON.stringify(this.nouUsuari));
-      this.mensaje = 'Usuari registrat correctament!';
-
-      this.nouUsuari = { nom: '', cognom: '', password: '', adreca: '', telefon: '' };
-    }
+    this.authService.register(this.nouUsuari).subscribe({
+      next: (res) => {
+        this.mensaje = 'Usuari registrat correctament a Firebase!';
+        setTimeout(() => this.router.navigate(['/login']), 1500);
+      },
+      error: (err) => {
+        this.mensaje = 'Error: ' + (err.error || 'No es pot connectar al servidor');
+      }
+    });
   }
 }

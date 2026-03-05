@@ -5,15 +5,28 @@
 <section class="profilesection">
   <h1 id="profileh1section"> El meu perfil </h1>
 
-  <div class="profileinfo">
-    <p><strong>Nom:</strong> {{ usuari.nom }} </p>
-    <p><strong>Cognom:</strong> {{ usuari.cognom }} </p>
-    <p><strong>Adreça:</strong> {{ usuari.adreca }} </p>
-    <p><strong>Telèfon:</strong> {{ usuari.telefon }} </p>
+  <div class="profileinfo" *ngIf="usuari">
+    <div *ngIf="!editant">
+      <p><strong>Nom:</strong> {{ usuari.nom }} </p>
+      <p><strong>Cognom:</strong> {{ usuari.cognom }} </p>
+      <p><strong>Adreça:</strong> {{ usuari.adreca }} </p>
+      <p><strong>Telèfon:</strong> {{ usuari.telefon }} </p>
+      <p><strong>Email:</strong> {{ usuari.email }} </p>
+      <button class="profilebutton" (click)="editant = true">Editar perfil</button>
+    </div>
+
+    <div *ngIf="editant">
+      <input [(ngModel)]="usuari.cognom" class="registerformsectioninput" placeholder="Cognom">
+      <input [(ngModel)]="usuari.adreca" class="registerformsectioninput" placeholder="Adreça">
+      <input [(ngModel)]="usuari.telefon" class="registerformsectioninput" placeholder="Telèfon">
+      <input [(ngModel)]="usuari.email" class="registerformsectioninput" placeholder="Email">
+      <button class="profilebutton" (click)="guardarCanvis()">Guardar canvis</button>
+      <button class="profilebutton logout" (click)="editant = false">Cancel·lar</button>
+    </div>
   </div>
 
   <div class="profilebuttons">
-    <button class="profilebutton">Editar perfil</button>
     <button class="profilebutton logout" (click)="tancarSessio()">Tancar sessió</button>
   </div>
+  <p *ngIf="mensaje">{{ mensaje }}</p>
 </section>
