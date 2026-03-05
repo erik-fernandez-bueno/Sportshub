@@ -41,7 +41,7 @@ app.post('/api/register', async (req, res) => {
 // login
 app.post('/api/login', async (req, res) => {
   try {
-    const { email, password } = req.body; // Canviem 'nom' per 'email'
+    const { email, password } = req.body;
     console.log("Intent de login per:", email);
 
     const doc = await db.collection('usuaris').doc(email).get();
