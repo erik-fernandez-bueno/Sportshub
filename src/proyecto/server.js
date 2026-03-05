@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const serviceAccount = require("./clauprivadafirebase.json");
+const serviceAccount = require("./Novaclaveprivada.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -63,9 +63,29 @@ app.post('/api/login', async (req, res) => {
 
 // perfil
 app.put('/api/perfil', async (req, res) => {
-  const { email, ...updates } = req.body;
-  await db.collection('users').doc(email).update(updates);
-  res.send({ message: "Perfil actualitzat" });
+  try {
+    const dadesRaw = req.body;
+
+
+    const dadesNetes = JSON.parse(JSON.stringify(dadesRaw));
+
+    console.log("Dades netes que intentem guardar:", dadesNetes);
+
+    if (!dadesNetes.email) {
+      return res.status(400).send("Falta l'email per identificar el document");
+    }
+
+    const userRef = db.collection('usuaris').doc(dadesNetes.email);
+    await userRef.set(dadesNetes, { merge: true });
+
+    res.json({ missatge: "Perfil actualitzat" });
+  } catch (error) {
+
+    console.error("error al servidor: ", error);
+    res.status(500).send(error.message);
+  }
 });
 
 app.listen(3000, () => console.log('Servidor corrent a http://localhost:3000'));
+
+
