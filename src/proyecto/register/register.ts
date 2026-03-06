@@ -16,6 +16,10 @@ import { AuthService } from '../auth.service';
 export class RegisterComponent {
   mensaje: string = "";
 
+  enviat: boolean = false;
+  codiUsuari: string = "";
+  private codiSecret: string = "1234";
+
   nouUsuari = {
     nom: '',
     cognom: '',
@@ -27,9 +31,23 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  solicitarVerificacio() {
+    if (!this.nouUsuari.email) {
+      this.mensaje = "Escriu un email primer per verificar-lo.";
+      return;
+    }
+    this.enviat = true;
+    this.mensaje = "S'ha activat el camp de verificació.";
+  }
+
   registrar() {
     if (!this.nouUsuari.nom || !this.nouUsuari.password || !this.nouUsuari.email) {
       this.mensaje = 'El nom, correu i la contrasenya són obligatoris';
+      return;
+    }
+
+    if (this.codiUsuari !== this.codiSecret) {
+      this.mensaje = "El codi de verificació és incorrecte!";
       return;
     }
 
