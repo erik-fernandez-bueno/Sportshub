@@ -37,7 +37,7 @@ export class RegisterComponent {
       return;
     }
     this.enviat = true;
-    this.mensaje = "S'ha activat el camp de verificació.";
+    this.mensaje = "nosortir";
   }
 
   registrar() {
