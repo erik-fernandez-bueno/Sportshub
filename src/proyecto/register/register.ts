@@ -55,13 +55,24 @@ setcodi(){
       .padStart(4, '0');
 }
 restablir(){
-  const data = {
+  if (!this.nouUsuari.email) {
+    this.mensaje = "Si us plau, introdueix el teu correu per restablir la contrasenya.";
+    return;
+  }
+
+    const data = {
     email: this.nouUsuari.email,
     subject: 'Restablir contrasenya',
     message: "http://localhost:4200/nuevacontrasenya"
   };
-  this.emailService.sendEmail(data).subscribe()
-
+  this.emailService.sendEmail(data).subscribe({
+    next: () => {
+      this.mensaje = "S'ha enviat un enllaç al teu correu.";
+    },
+    error: (err) => {
+      this.mensaje = "Error en enviar el correu.";
+    }
+  });
 }
   registrar() {
     if (!this.nouUsuari.nom || !this.nouUsuari.password || !this.nouUsuari.email) {
@@ -77,6 +88,7 @@ restablir(){
     this.authService.register(this.nouUsuari).subscribe({
       next: (res) => {
         this.mensaje = 'Usuari registrat correctament a Firebase!';
+        localStorage.setItem('usuariLoguejat', JSON.stringify(this.nouUsuari));
         setTimeout(() => this.router.navigate(['/login']), 1500);
       },
       error: (err) => {

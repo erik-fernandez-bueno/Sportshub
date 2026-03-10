@@ -26,9 +26,8 @@
     <input [(ngModel)]="nouUsuari.adreca" class="registerformsectioninput" type="text" id="foradreça" name="adreça" placeholder="Adreça"> <br>
     <input [(ngModel)]="nouUsuari.telefon" class="registerformsectioninput" type="text" id="fortelefon" name="telefon" placeholder="Telèfon"> <br>
     <button (click)="registrar()" class="registerformsectionbutton" type="submit"> CONTINUAR </button>
-    <button (click)="restablir()" class="registerformsectionbutton" type="submit"> Restablir contrasenya </button>
+    <button (click)="restablir()" class="registerformsectionbutton" type="button"> Restablir contrasenya </button>
     <p *ngIf="mensaje && mensaje !== `nosortir`" class="registerformsectioninput" style="padding-right: 0%; margin-right:25%; border: black solid 1px">{{ mensaje }}</p>
     <p class="registerformsectiontext">Ja tens un compte? <a [routerLink]="['/login']" class="linktext">Iniciar Sessió</a></p>
-    <p *ngIf="mensaje">{{ mensaje }}</p>
   </form>
 </section>
