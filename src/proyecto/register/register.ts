@@ -3,6 +3,8 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import {EmailService} from '../services/email';
+import {sendEmailVerification} from '@angular/fire/auth';
 
 
 @Component({
@@ -15,7 +17,6 @@ import { AuthService } from '../auth.service';
 
 export class RegisterComponent {
   mensaje: string = "";
-
   enviat: boolean = false;
   codiUsuari: string = "";
   private codiSecret: string = "1234";
@@ -29,17 +30,39 @@ export class RegisterComponent {
     telefon: ''
   };
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,private emailService: EmailService) {}
+
 
   solicitarVerificacio() {
+    this.setcodi()
     if (!this.nouUsuari.email) {
       this.mensaje = "Escriu un email primer per verificar-lo.";
       return;
     }
+    const data = {
+      email: this.nouUsuari.email,
+      subject: 'Verificació Sportshub',
+      message: this.codiSecret
+    };
     this.enviat = true;
     this.mensaje = "nosortir";
-  }
+    this.emailService.sendEmail(data).subscribe()
+    }
 
+setcodi(){
+    this.codiSecret = Math.floor(Math.random() * 10000)
+      .toString()
+      .padStart(4, '0');
+}
+restablir(){
+  const data = {
+    email: this.nouUsuari.email,
+    subject: 'Restablir contrasenya',
+    message: "http://localhost:4200/nuevacontrasenya"
+  };
+  this.emailService.sendEmail(data).subscribe()
+
+}
   registrar() {
     if (!this.nouUsuari.nom || !this.nouUsuari.password || !this.nouUsuari.email) {
       this.mensaje = 'El nom, correu i la contrasenya són obligatoris';

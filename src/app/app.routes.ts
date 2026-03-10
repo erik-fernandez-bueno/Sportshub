@@ -12,6 +12,8 @@ import { ProductoComponent } from '../proyecto/producto/producto';
 import { RegisterComponent } from '../proyecto/register/register';
 import {UnisexComponent} from '../proyecto/unisex/unisex';
 import {NenComponent} from '../proyecto/nen/nen';
+import {nuevacontrasenyaComponent} from '../proyecto/nuevacontrasenya/nuevacontrasenya';
+
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,7 +25,7 @@ export const routes: Routes = [
   { path: 'hombre', component: HombreComponent },
   { path: 'unisex', component: UnisexComponent },
   { path: 'nen', component: NenComponent },
-
+  { path: 'nuevacontrasenya', component: nuevacontrasenyaComponent },
   { path: 'producto/:id', component: ProductoComponent },
   { path: 'register', component: RegisterComponent },
   { path: '**', redirectTo: '' }

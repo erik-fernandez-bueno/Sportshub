@@ -1,6 +1,7 @@
 const express = require('express');
 const admin = require("firebase-admin");
 const cors = require('cors');
+const nodemailer = require("nodemailer");
 
 const app = express();
 app.use(cors());
@@ -13,6 +14,13 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "sporthubefi@gmail.com",
+    pass: "dcwf bmdt rtiw jllo"
+  }
+});
 
 app.get('/api/test', (req, res) => {
   res.send("El servidor respon correctament!");
@@ -83,6 +91,28 @@ app.put('/api/perfil', async (req, res) => {
 
     console.error("error al servidor: ", error);
     res.status(500).send(error.message);
+  }
+});
+
+//sendemail
+app.post('/api/enviar-email', async (req, res) => {
+  try {
+    const { email, subject, message } = req.body;
+
+    const mailOptions = {
+      from: "sporthubefi@gmail.com",
+      to: email,
+      subject: subject,
+      text: message
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.json({ missatge: "Email enviat correctament" });
+
+  } catch (error) {
+    console.error("Error enviant email:", error);
+    res.status(500).send("Error enviant email");
   }
 });
 

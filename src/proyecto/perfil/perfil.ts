@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import {EmailService} from '../services/email';
+import {sendEmailVerification} from '@angular/fire/auth';
+
 
 @Component({
   selector: 'app-perfil',
@@ -16,7 +19,7 @@ export class PerfilComponent implements OnInit {
   editant: boolean = false;
   mensaje: string = "";
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private emailService: EmailService) {}
 
   ngOnInit() {
     const dades = localStorage.getItem('usuariLoguejat');
@@ -26,7 +29,15 @@ export class PerfilComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+  restablir(){
+    const data = {
+      email: this.usuari.email,
+      subject: 'Restablir contrasenya',
+      message: "http://localhost:4200/nuevacontrasenya"
+    };
+    this.emailService.sendEmail(data).subscribe()
 
+  }
   guardarCanvis() {
     this.authService.updatePerfil(this.usuari).subscribe({
       next: () => {
