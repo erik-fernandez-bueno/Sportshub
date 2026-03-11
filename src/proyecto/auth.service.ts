@@ -22,4 +22,7 @@ export class AuthService {
   updatePerfil(usuari: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/perfil`, usuari);
   }
+  checkEmailExists(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/check-email?email=${encodeURIComponent(email)}`);
+  }
 }

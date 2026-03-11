@@ -3,9 +3,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import {EmailService} from '../services/email';
-import {sendEmailVerification} from '@angular/fire/auth';
-
+import { EmailService } from '../services/email';
 
 @Component({
   selector: 'app-register',
@@ -14,12 +12,11 @@ import {sendEmailVerification} from '@angular/fire/auth';
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-
 export class RegisterComponent {
-  mensaje: string = "";
+  mensaje: string = '';
   enviat: boolean = false;
-  codiUsuari: string = "";
-  private codiSecret: string = "1234";
+  codiUsuari: string = '';
+  private codiSecret: string = '1234';
 
   nouUsuari = {
     nom: '',
@@ -27,73 +24,110 @@ export class RegisterComponent {
     password: '',
     email: '',
     adreca: '',
-    telefon: ''
+    telefon: '',
   };
 
-  constructor(private authService: AuthService, private router: Router,private emailService: EmailService) {}
-
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private emailService: EmailService
+  ) {}
 
   solicitarVerificacio() {
-    this.setcodi()
     if (!this.nouUsuari.email) {
-      this.mensaje = "Escriu un email primer per verificar-lo.";
+      this.mensaje = 'Escriu un email primer per verificar-lo.';
       return;
     }
+    this.setcodi();
     const data = {
       email: this.nouUsuari.email,
       subject: 'Verificació Sportshub',
-      message: this.codiSecret
+      message: this.codiSecret,
     };
     this.enviat = true;
-    this.mensaje = "nosortir";
-    this.emailService.sendEmail(data).subscribe()
-    }
+    this.mensaje = 'nosortir';
+    this.emailService.sendEmail(data).subscribe();
+  }
 
-setcodi(){
+  setcodi() {
     this.codiSecret = Math.floor(Math.random() * 10000)
       .toString()
       .padStart(4, '0');
-}
-restablir(){
-  if (!this.nouUsuari.email) {
-    this.mensaje = "Si us plau, introdueix el teu correu per restablir la contrasenya.";
-    return;
   }
 
-    const data = {
-    email: this.nouUsuari.email,
-    subject: 'Restablir contrasenya',
-    message: "http://localhost:4200/nuevacontrasenya"
-  };
-  this.emailService.sendEmail(data).subscribe({
-    next: () => {
-      this.mensaje = "S'ha enviat un enllaç al teu correu.";
-    },
-    error: (err) => {
-      this.mensaje = "Error en enviar el correu.";
+  restablir() {
+    if (!this.nouUsuari.email) {
+      this.mensaje =
+        'Si us plau, introdueix el teu correu per restablir la contrasenya.';
+      return;
     }
-  });
-}
+
+    this.authService.checkEmailExists(this.nouUsuari.email).subscribe({
+      next: (existeix: boolean) => {
+        if (!existeix) {
+          this.mensaje = "Error: aquest correu no està registrat.";
+          return;
+        }
+        const data = {
+          email: this.nouUsuari.email,
+          subject: 'Restablir contrasenya',
+          message: '',
+        };
+        this.emailService.sendEmail(data).subscribe({
+          next: () => {
+            this.mensaje = "S'ha enviat un enllaç al teu correu.";
+          },
+          error: () => {
+            this.mensaje = 'Error en enviar el correu.';
+          },
+        });
+      },
+      error: () => {
+        this.mensaje = 'Error al comprovar el correu. Torna-ho a intentar.';
+      },
+    });
+  }
+
   registrar() {
-    if (!this.nouUsuari.nom || !this.nouUsuari.password || !this.nouUsuari.email) {
+    if (
+      !this.nouUsuari.nom ||
+      !this.nouUsuari.password ||
+      !this.nouUsuari.email
+    ) {
       this.mensaje = 'El nom, correu i la contrasenya són obligatoris';
       return;
     }
 
     if (this.codiUsuari !== this.codiSecret) {
-      this.mensaje = "El codi de verificació és incorrecte!";
+      this.mensaje = 'El codi de verificació és incorrecte!';
       return;
     }
 
-    this.authService.register(this.nouUsuari).subscribe({
-      next: (res) => {
-        this.mensaje = 'Usuari registrat correctament a Firebase!';
-        localStorage.setItem('usuariLoguejat', JSON.stringify(this.nouUsuari));
-        setTimeout(() => this.router.navigate(['/login']), 1500);
+    this.authService.checkEmailExists(this.nouUsuari.email).subscribe({
+      next: (existeix: boolean) => {
+        if (existeix) {
+          this.mensaje =
+            "Error: aquest correu ja està registrat. Prova d'iniciar sessió.";
+          return;
+        }
+        this.authService.register(this.nouUsuari).subscribe({
+          next: () => {
+            this.mensaje = 'Usuari registrat correctament a Firebase!';
+            localStorage.setItem(
+              'usuariLoguejat',
+              JSON.stringify(this.nouUsuari)
+            );
+            setTimeout(() => this.router.navigate(['/login']), 1500);
+          },
+          error: (err) => {
+            this.mensaje =
+              'Error: ' + (err.error || 'No es pot connectar al servidor');
+          },
+        });
       },
-      error: (err) => {
-        this.mensaje = 'Error: ' + (err.error || 'No es pot connectar al servidor');
-      }
+      error: () => {
+        this.mensaje = 'Error al comprovar el correu. Torna-ho a intentar.';
+      },
     });
   }
 }

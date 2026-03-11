@@ -30,13 +30,27 @@ export class PerfilComponent implements OnInit {
     }
   }
   restablir(){
-    const data = {
-      email: this.usuari.email,
-      subject: 'Restablir contrasenya',
-      message: "http://localhost:4200/nuevacontrasenya"
-    };
-    this.emailService.sendEmail(data).subscribe()
-
+    if (!this.usuari.email) {
+      this.mensaje = "Escriu un email per restablir la contrasenya.";
+      return;
+    }
+    this.authService.checkEmailExists(this.usuari.email).subscribe({
+      next: (existeix: boolean) => {
+        if (!existeix) {
+          this.mensaje = "Error: aquest correu no està registrat.";
+          return;
+        }
+        const data = {
+          email: this.usuari.email,
+          subject: 'Restablir contrasenya',
+          message: ""
+        };
+        this.emailService.sendEmail(data).subscribe()
+      },
+      error: () => {
+        this.mensaje = "Error al comprovar el correu. Torna-ho a intentar.";
+      }
+    });
   }
   guardarCanvis() {
     this.authService.updatePerfil(this.usuari).subscribe({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
@@ -15,7 +15,11 @@ export class nuevacontrasenyaComponent implements OnInit {
   usuari: any = { password: '' };
   mensaje: string = "";
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     const dadesGuardades = localStorage.getItem('usuariLoguejat');
@@ -23,6 +27,13 @@ export class nuevacontrasenyaComponent implements OnInit {
       const user = JSON.parse(dadesGuardades);
       this.usuari = { ...user };
     }
+
+    this.route.queryParams.subscribe(params => {
+      if (params['email']) {
+        this.usuari = { ...this.usuari, email: params['email'], password: '' };
+        console.log("Email llegit de la URL:", params['email']);
+      }
+    });
   }
 
   guardarCanvis() {
@@ -36,10 +47,17 @@ export class nuevacontrasenyaComponent implements OnInit {
       return;
     }
 
-    this.authService.updatePerfil(this.usuari).subscribe({
+    const dadesActualitzar = {
+      email: this.usuari.email,
+      password: this.usuari.password
+    };
+
+    console.log("Guardant contrasenya per:", dadesActualitzar.email);
+
+    this.authService.updatePerfil(dadesActualitzar).subscribe({
       next: () => {
-        localStorage.setItem('usuariLoguejat', JSON.stringify(this.usuari));
         this.mensaje = "Contrasenya actualitzada correctament!";
+        setTimeout(() => this.router.navigate(['/login']), 1500);
       },
       error: (err) => {
         console.error("Error del servidor:", err);
