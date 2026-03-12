@@ -13,7 +13,12 @@ import { AuthService } from '../auth.service';
 })
 export class nuevacontrasenyaComponent implements OnInit {
   usuari: any = { password: '' };
-  mensaje: string = "";
+  passwordConfirm: string = '';
+  mensaje: string = '';
+  mensajeSuccess: boolean = false;
+  passwordMismatch: boolean = false;
+  showPassword1: boolean = false;
+  showPassword2: boolean = false;
 
   constructor(
     private router: Router,
@@ -36,16 +41,40 @@ export class nuevacontrasenyaComponent implements OnInit {
     });
   }
 
-  guardarCanvis() {
-    if (!this.usuari.password || this.usuari.password.length < 4) {
+  contrasenyes_coincideixen(): boolean {
+    return this.usuari.password === this.passwordConfirm;
+  }
+
+  contrasenya_valida(): boolean {
+    return this.usuari.password && this.usuari.password.length >= 4;
+  }
+
+  validar(): boolean {
+    this.passwordMismatch = false;
+    this.mensaje = '';
+    this.mensajeSuccess = false;
+
+    if (!this.contrasenya_valida()) {
       this.mensaje = "La contrasenya és massa curta.";
-      return;
+      return false;
+    }
+
+    if (!this.contrasenyes_coincideixen()) {
+      this.passwordMismatch = true;
+      this.mensaje = "Les contrasenyes no coincideixen.";
+      return false;
     }
 
     if (!this.usuari.email) {
       this.mensaje = "Error: No s'ha trobat l'email de l'usuari.";
-      return;
+      return false;
     }
+
+    return true;
+  }
+
+  guardarCanvis() {
+    if (!this.validar()) return;
 
     const dadesActualitzar = {
       email: this.usuari.email,
@@ -56,6 +85,7 @@ export class nuevacontrasenyaComponent implements OnInit {
 
     this.authService.updatePerfil(dadesActualitzar).subscribe({
       next: () => {
+        this.mensajeSuccess = true;
         this.mensaje = "Contrasenya actualitzada correctament!";
         setTimeout(() => this.router.navigate(['/login']), 1500);
       },

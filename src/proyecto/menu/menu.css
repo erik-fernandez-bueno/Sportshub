@@ -55,7 +55,137 @@ nav a {
   height: auto;
 }
 
-.user-link {
+/* Sports Ticker */
+.sports-ticker {
   display: flex;
   align-items: center;
+  background: linear-gradient(90deg, #00205b 0%, #003087 40%, #00205b 100%);
+  color: white;
+  height: 2.8vw;
+  min-height: 28px;
+  overflow: hidden;
+  width: 100%;
+  clear: both;
+  box-shadow: 0 2px 8px rgba(0,0,64,0.25);
+  position: relative;
+}
+
+.ticker-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #e8001c;
+  color: white;
+  font-weight: 700;
+  font-size: 0.85vw;
+  font-size: clamp(10px, 0.85vw, 14px);
+  letter-spacing: 0.12em;
+  padding: 0 1.2vw;
+  height: 100%;
+  white-space: nowrap;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.ticker-dot {
+  width: 7px;
+  height: 7px;
+  background: white;
+  border-radius: 50%;
+  animation: pulse 1.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+.ticker-track-wrapper {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.ticker-track-wrapper::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  background: linear-gradient(to right, #00205b, transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ticker-track-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  background: linear-gradient(to left, #00205b, transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ticker-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: ticker-scroll linear infinite;
+  will-change: transform;
+}
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vw;
+  font-size: clamp(10px, 1vw, 15px);
+  padding: 0 1.5vw;
+}
+
+.ticker-sport {
+  background: rgba(255,255,255,0.15);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-size: clamp(9px, 0.75vw, 12px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ticker-teams {
+  font-weight: 500;
+  color: #e8f0ff;
+}
+
+.ticker-vs {
+  color: #7ab3ff;
+  font-weight: 400;
+  margin: 0 3px;
+}
+
+.ticker-score {
+  font-weight: 700;
+  color: #ffd700;
+  font-size: clamp(11px, 1.05vw, 16px);
+}
+
+.ticker-league {
+  color: #a0b8e0;
+  font-size: clamp(9px, 0.8vw, 12px);
+}
+
+.ticker-separator {
+  color: rgba(255,255,255,0.3);
+  margin: 0 0.8vw;
+  font-size: 0.7em;
 }

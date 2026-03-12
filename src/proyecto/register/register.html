@@ -6,11 +6,11 @@
 <section class="registersection">
   <h1 id="registerh1section"> Crea el teu compte </h1>
   <form class="registerformsection" #registerForm="ngForm">
-    <input [(ngModel)]="nouUsuari.nom" class="registerformsectioninput" type="text" id="fornom" name="nom" placeholder="Nom" required> <br>
-    <input [(ngModel)]="nouUsuari.cognom" class="registerformsectioninput" type="text" id="forcognom" name="cognom" placeholder="Cognom" required> <br>
-    <input [(ngModel)]="nouUsuari.password" class="registerformsectioninput" type="password" id="forpass" name="password" placeholder="Contrasenya" required> <br>
+    <input [(ngModel)]="nouUsuari.nom" class="registerformsectioninput" type="text" id="fornom" name="nom" placeholder="Nom" required>
+    <input [(ngModel)]="nouUsuari.cognom" class="registerformsectioninput" type="text" id="forcognom" name="cognom" placeholder="Cognom" required>
+    <input [(ngModel)]="nouUsuari.password" class="registerformsectioninput" type="password" id="forpass" name="password" placeholder="Contrasenya" required>
 
-    <div style="display: flex; gap: 5px; margin-bottom: 10px; width: 73%; padding-left: 10px">
+    <div style="display: flex; gap: 5px; margin-bottom: 12px; width: 100%; box-sizing: border-box;">
       <input [(ngModel)]="nouUsuari.email" name="email" class="registerformsectioninput" type="email" placeholder="Correu electrònic" style="flex: 1; margin-bottom: 0;">
       <button (click)="solicitarVerificacio()" type="button" style="padding: 0 10px; background-color: #555; color: white; border-radius: 4px; border: none; cursor: pointer;">
         Verificar
@@ -23,8 +23,8 @@
              style="border: 2px solid #3498db;">
     </div>
 
-    <input [(ngModel)]="nouUsuari.adreca" class="registerformsectioninput" type="text" id="foradreça" name="adreça" placeholder="Adreça"> <br>
-    <input [(ngModel)]="nouUsuari.telefon" class="registerformsectioninput" type="text" id="fortelefon" name="telefon" placeholder="Telèfon"> <br>
+    <input [(ngModel)]="nouUsuari.adreca" class="registerformsectioninput" type="text" id="foradreça" name="adreça" placeholder="Adreça">
+    <input [(ngModel)]="nouUsuari.telefon" class="registerformsectioninput" type="text" id="fortelefon" name="telefon" placeholder="Telèfon">
     <button (click)="registrar()" class="registerformsectionbutton" type="submit"> CONTINUAR </button>
     <button (click)="restablir()" class="registerformsectionbutton" type="button"> Restablir contrasenya </button>
     <p *ngIf="mensaje && mensaje !== `nosortir`" class="registerformsectioninput" style="padding-right: 0%; margin-right:25%; border: black solid 1px">{{ mensaje }}</p>

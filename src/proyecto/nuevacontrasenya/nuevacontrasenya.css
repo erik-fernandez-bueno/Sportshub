@@ -1,193 +1,146 @@
-@media screen and (min-width: 0px) and (max-width: 760px) {
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* Register i Login */
-
-  /* ------------- Perfil -------------- */
-
-  .profileaside {
-    display: none;
-    width: 0;
-    height: 0;
-    padding-top: 0;
-    float: none;
-    position: relative;
-    object-fit: none;
-  }
-
-  .profileasideimg {
-    display: none;
-  }
-
-  .profilesection {
-    margin-left: 0;
-    text-align: left;
-    padding: 5%;
-  }
-
-  #profileh1section {
-    text-align: center;
-    color: darkblue;
-    font-size: 8vw;
-    margin-bottom: 6%;
-  }
-
-  .profileinfo {
-    margin-left: 0;
-    font-size: 18px;
-    line-height: 1.8em;
-    color: #222;
-  }
-
-  .profileinfo p {
-    margin-bottom: 5%;
-  }
-
-  .profilebuttons {
-    text-align: center;
-    margin-top: 10%;
-  }
-
-  .profilebutton {
-    background-color: darkblue;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    width: 90%;
-    padding-top: 4%;
-    padding-bottom: 4%;
-    font-size: 18px;
-    margin-bottom: 4%;
-    cursor: pointer;
-  }
-
-  .profilebutton.logout {
-    background-color: #b00020;
-  }
-
-  .profilebutton:hover {
-    opacity: 0.9;
-  }
-
-  .registerasideimg {
-    display: none;
-  }
-
-  .registeraside {
-    padding-top: 0;
-    width: 0;
-    height: 0;
-    float: none;
-    display: none;
-    object-fit: none;
-    position: relative;
-  }
-
-  .registersection {
-    margin-left: 0;
-    text-align: left;
-  }
-
-  #registerh1section {
-    padding-top: 3%;
-    margin-left: 5%;
-  }
-
-  .registerformsectiontext {
-    text-align: left;
-    margin-left: 5%;
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  .registerformsectioninput {
-    padding-left: 5%;
-    text-align: left;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    padding-right: 40%;
-  }
-
-  .registerformsectionbutton {
-    background-color: darkblue;
-    color: white;
-    font-weight: bold;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    padding-left: 29%;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    padding-right: 28%;
-  }
+.profilesection {
+  font-family: sans-serif;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f2f8;
+  padding: 24px 16px;
 }
-/*Ordinador*/
 
-@media screen and (min-width: 761px) {
+.password-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 139, 0.13);
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
 
-  /* ------------- Register & Login -------------- */
+.password-card #profileh1section {
+  color: #00008B;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 6px;
+}
 
-  .registeraside {
-    padding-top: 2%;
-    width: 50%;
-    height: 100%;
-    float: left;
-    display: flex;
-    object-fit: cover;
-    position: absolute;
-  }
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-  .registerasideimg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: relative;
-    overflow: hidden;
-  }
+.input-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3d4466;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
 
-  .registersection {
-    text-align: left;
-    margin-left: 50%;
-  }
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
-  .registersection {
-    text-align: left;
-    margin-left: 55%;
-  }
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 44px 12px 14px;
+  border: 2px solid #dde1ee;
+  border-radius: 10px;
+  font-size: 0.97rem;
+  color: #1a1f3a;
+  background: #f8f9fc;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
 
-  #registerh1section {
-    padding-top: 3%;
-    margin-left: 5%;
-  }
+.input-wrapper input::placeholder { color: #9098b8; }
 
-  .registerformsectiontext {
-    text-align: left;
-    margin-left: 5%;
-    float: left;
-    font-size: 20px;
-    font-weight: bold;
-  }
+.input-wrapper input:focus {
+  border-color: #00008B;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 0, 139, 0.1);
+}
 
-  .registerformsectioninput {
-    text-align: left;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    padding-left: 5%;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    padding-right: 40%;
-  }
+.input-wrapper input.input-error {
+  border-color: #b00020;
+  background: #fff0f2;
+}
 
-  .registerformsectionbutton {
-    background-color: darkblue;
-    color: white;
-    font-weight: bold;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    padding-left: 29%;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    padding-right: 28%;
-  }
+.eye-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px;
+  color: #9098b8;
+  transition: color 0.15s;
+}
+
+.eye-btn:hover { color: #00008B; }
+
+.error-message {
+  color: #b00020;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.mensaje {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  background: #fff0f2;
+  color: #b00020;
+  border: 1px solid rgba(176, 0, 32, 0.2);
+}
+
+.mensaje.success {
+  background: #f0fff7;
+  color: #0a6e3f;
+  border-color: rgba(10, 110, 63, 0.2);
+}
+
+.save-btn {
+  width: 100%;
+  padding: 13px;
+  background: #00008B;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 139, 0.28);
+  transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+  margin-top: 4px;
+}
+
+.save-btn:hover {
+  background: #1a1aaa;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 139, 0.4);
+}
+
+.save-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 139, 0.2);
+}
+
+@media (max-width: 500px) {
+  .password-card { padding: 28px 20px 24px; }
+  .password-card #profileh1section { font-size: 1.3rem; }
 }

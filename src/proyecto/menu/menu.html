@@ -25,3 +25,28 @@
   </ng-template>
 
 </nav>
+
+<div class="sports-ticker" *ngIf="tickerEvents.length > 0">
+  <div class="ticker-track-wrapper">
+    <div class="ticker-track" [style.animationDuration]="tickerDuration">
+      <span class="ticker-item" *ngFor="let event of tickerEvents">
+        <span class="ticker-sport">{{ event.strSport }}</span>
+        <span class="ticker-teams">{{ event.strHomeTeam }} <span class="ticker-vs">vs</span> {{ event.strAwayTeam }}</span>
+        <span class="ticker-score" *ngIf="event.intHomeScore !== null && event.intAwayScore !== null">
+          {{ event.intHomeScore }} - {{ event.intAwayScore }}
+        </span>
+        <span class="ticker-league">· {{ event.strLeague }}</span>
+        <span class="ticker-separator">⬥</span>
+      </span>
+      <span class="ticker-item" *ngFor="let event of tickerEvents">
+        <span class="ticker-sport">{{ event.strSport }}</span>
+        <span class="ticker-teams">{{ event.strHomeTeam }} <span class="ticker-vs">vs</span> {{ event.strAwayTeam }}</span>
+        <span class="ticker-score" *ngIf="event.intHomeScore !== null && event.intAwayScore !== null">
+          {{ event.intHomeScore }} - {{ event.intAwayScore }}
+        </span>
+        <span class="ticker-league">· {{ event.strLeague }}</span>
+        <span class="ticker-separator">⬥</span>
+      </span>
+    </div>
+  </div>
+</div>

@@ -50,11 +50,11 @@ export class RegisterComponent {
   }
 
   setcodi() {
-    this.codiSecret = Math.floor(Math.random() * 10000)
-      .toString()
-      .padStart(4, '0');
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    this.codiSecret = Array.from({ length: 8 }, () =>
+      chars[Math.floor(Math.random() * chars.length)]
+    ).join('');
   }
-
   restablir() {
     if (!this.nouUsuari.email) {
       this.mensaje =

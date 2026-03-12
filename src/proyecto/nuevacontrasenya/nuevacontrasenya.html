@@ -1,10 +1,28 @@
 <section class="profilesection">
-  <h1 id="profileh1section"> Canviar contrasenya</h1>
-    <div>
-      <input type="password" [(ngModel)]="usuari.password" class="registerformsectioninput" placeholder="Contrasenya">
-      <button class="profilebutton" (click)="guardarCanvis()">Guardar canvis</button>
+  <div class="password-card">
+
+    <h1 id="profileh1section">Canviar contrasenya</h1>
+
+    <div class="input-group">
+      <label>Nova contrasenya</label>
+      <div class="input-wrapper">
+        <input [type]="showPassword1 ? 'text' : 'password'" [(ngModel)]="usuari.password" placeholder="Mínim 4 caràcters">
+        <button type="button" class="eye-btn" (mousedown)="showPassword1 = true" (mouseup)="showPassword1 = false" (mouseleave)="showPassword1 = false">👁</button>
+      </div>
     </div>
-  <div class="profilebuttons">
+
+    <div class="input-group">
+      <label>Confirmar contrasenya</label>
+      <div class="input-wrapper">
+        <input [type]="showPassword2 ? 'text' : 'password'" [(ngModel)]="passwordConfirm" [class.input-error]="passwordMismatch" placeholder="Repeteix la contrasenya">
+        <button type="button" class="eye-btn" (mousedown)="showPassword2 = true" (mouseup)="showPassword2 = false" (mouseleave)="showPassword2 = false">👁</button>
+      </div>
+      <span class="error-message" *ngIf="passwordMismatch">Les contrasenyes no coincideixen</span>
+    </div>
+
+    <p class="mensaje" *ngIf="mensaje" [class.success]="mensajeSuccess">{{ mensaje }}</p>
+
+    <button class="save-btn" (click)="guardarCanvis()">Guardar canvis</button>
+
   </div>
-  <p *ngIf="mensaje">{{ mensaje }}</p>
 </section>

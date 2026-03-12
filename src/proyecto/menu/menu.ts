@@ -3,6 +3,7 @@ import {NgOptimizedImage} from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {AuthService} from '../auth.service';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-menu',
@@ -17,11 +18,23 @@ import {AuthService} from '../auth.service';
 })
 export class MenuComponent implements OnInit {
   usuariLoguejat: any = null;
+  tickerEvents: any[] = [];
+  tickerDuration: string = '40s';
+  private refreshInterval: any;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService,private http: HttpClient) {}
 
   ngOnInit() {
     this.comprovarSessio();
+    this.carregarTickerEvents();
+    // Refresh every 5 minutes
+    this.refreshInterval = setInterval(() => this.carregarTickerEvents(), 5 * 60 * 1000);
+  }
+
+  ngOnDestroy() {
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+    }
 
     this.authService.usuari$.subscribe(usuari => {
       this.usuariLoguejat = usuari;
@@ -33,5 +46,39 @@ export class MenuComponent implements OnInit {
     if (dades) {
       this.usuariLoguejat = JSON.parse(dades);
     }
+  }
+
+  carregarTickerEvents() {
+    const leagueIds = [4328, 4335, 4331, 4346, 4480];
+    const requests = leagueIds.map(id =>
+      this.http.get<any>(`https://www.thesportsdb.com/api/v1/json/123/eventspastleague.php?id=${id}&e=15`)
+    );
+
+    this.fetchLeagues(leagueIds);
+  }
+
+  private fetchLeagues(ids: number[]) {
+    const allEvents: any[] = [];
+    let completed = 0;
+
+    ids.forEach(id => {
+      fetch(`https://www.thesportsdb.com/api/v1/json/123/eventspastleague.php?id=${id}&e=15`)
+        .then(r => r.json())
+        .then(data => {
+          if (data?.events) {
+            allEvents.push(...data.events.slice(-3));
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          completed++;
+          if (completed === ids.length) {
+            this.tickerEvents = allEvents
+              .sort((a, b) => new Date(b.dateEvent).getTime() - new Date(a.dateEvent).getTime())
+              .slice(0, 20);
+            this.tickerDuration = `${Math.max(20, this.tickerEvents.length * 4)}s`;
+          }
+        });
+    });
   }
 }
