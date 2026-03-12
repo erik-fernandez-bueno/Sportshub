@@ -23,7 +23,8 @@ export class LoginComponent {
       next: (usuari) => {
         localStorage.setItem('usuariLoguejat', JSON.stringify(usuari));
         this.mensaje = "Login correcte! Benvingut ";
-        setTimeout(() => this.router.navigate(['/perfil']), 1000);
+        this.authService.actualitzarUsuari(usuari);
+        setTimeout(() => this.router.navigate(['/perfil']), 500);
       },
       error: (err) => {
         this.mensaje = "Error: " + (err.status === 401 ? "Credencials incorrectes" : "Servidor desconnectat");

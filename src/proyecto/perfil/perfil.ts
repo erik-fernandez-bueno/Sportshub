@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +19,8 @@ export class PerfilComponent implements OnInit {
   editant: boolean = false;
   mensaje: string = "";
 
-  constructor(private router: Router, private authService: AuthService, private emailService: EmailService) {}
+  constructor(private router: Router, private authService: AuthService, private emailService: EmailService,
+  private cgf: ChangeDetectorRef) {}
 
   ngOnInit() {
     const dades = localStorage.getItem('usuariLoguejat');
@@ -58,6 +59,7 @@ export class PerfilComponent implements OnInit {
         localStorage.setItem('usuariLoguejat', JSON.stringify(this.usuari));
         this.editant = false;
         this.mensaje = "Perfil actualitzat correctament!";
+        this.cgf.detectChanges();
       },
       error: () => this.mensaje = "Error al guardar les dades."
     });
@@ -65,6 +67,7 @@ export class PerfilComponent implements OnInit {
 
   tancarSessio() {
     localStorage.removeItem('usuariLoguejat');
+    this.authService.actualitzarUsuari(null);
     this.router.navigate(['/login']);
   }
 }

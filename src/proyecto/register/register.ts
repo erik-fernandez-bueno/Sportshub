@@ -117,7 +117,7 @@ export class RegisterComponent {
               'usuariLoguejat',
               JSON.stringify(this.nouUsuari)
             );
-            setTimeout(() => this.router.navigate(['/login']), 1500);
+            setTimeout(() => this.router.navigate(['/login']), 500);
           },
           error: (err) => {
             this.mensaje =
