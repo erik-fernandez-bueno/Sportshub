@@ -51,7 +51,7 @@ export class MenuComponent implements OnInit {
   carregarTickerEvents() {
     const leagueIds = [4328, 4335, 4331, 4346, 4480];
     const requests = leagueIds.map(id =>
-      this.http.get<any>(`https://www.thesportsdb.com/api/v1/json/123/eventspastleague.php?id=${id}&e=15`)
+      this.http.get<any>(`https://www.thesportlosdb.com/api/v1/json/123/eventspastleague.php?id=${id}&e=15`)
     );
 
     this.fetchLeagues(leagueIds);

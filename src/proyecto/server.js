@@ -130,8 +130,17 @@ app.get('/api/check-email', async (req, res) => {
     res.status(500).send("Error al servidor");
   }
 });
-
-
+const {crearConfigBaseDades} = require("../app/db.config.js")
+const dbp = crearConfigBaseDades();
+const {getmodelProductes} = require("./models/productes.js");
+const Producte = getmodelProductes(dbp);
+const {getmodelaFactura} = require("./models/factura.js");
+const Factura = getmodelaFactura(dbp);
+const {getmodetallsfactura} = require("./models/detallfactura.js");
+const DetallFactura = getmodetallsfactura(dbp);
+dbp.sync().then(()=>{
+  console.log("Drop and re-sync db");
+});
 app.listen(3000, () => console.log('Servidor corrent a http://localhost:3000'));
 
 
