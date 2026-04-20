@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import { MenuComponent } from '../menu/menu';
 import { NgOptimizedImage, NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import {ProductesService} from '../services/productes';
 
 @Component({
   selector: 'app-nen',
@@ -20,35 +21,38 @@ import { FormsModule } from '@angular/forms';
 })
 export class NenComponent {
 
-  categorias: string[] = ['Pantalones', 'Camisetas', 'Zapatillas','vehiculo','Bicicleta'];
-
+  categorias: string[] = ['Pantalones', 'Camisetas', 'Zapatillas', 'vehiculo', 'Bicicleta'];
   categoriaSeleccionada: string = 'todas';
+  productos: any[] = [];
+  productosFiltrados: any[] = [];
 
-  productos = [
-    {
-      id: 13,
-      price: 30,
-      nombre: "Zapatillas Running Hombre",
-      descripcion: "Amortiguación avanzada y máxima comodidad.",
-      imagen: "assets/ZapatillasRunningKIPRUN.jpg",
-      categoria: "Zapatillas"
-    }
-    ];
+  constructor(private productesService: ProductesService,  private cgf: ChangeDetectorRef) {}
 
-  productosFiltrados = [...this.productos];
+  ngOnInit() {
+    this.productesService.getProductesByGenere('nen').subscribe({
+      next: (data) => {
+        this.productos = data;
+        this.productosFiltrados = [...data];
+        console.log('Productes carregats:', this.productosFiltrados);
+        this.cgf.detectChanges();
+      },
+      error: (err) => console.error('Error carregant productes:', err)
+    });
+
+  }
+
 
   filtrarProductos() {
     if (this.categoriaSeleccionada === 'todas') {
       this.productosFiltrados = [...this.productos];
     } else {
       this.productosFiltrados = this.productos.filter(producto => {
-        if (Array.isArray(producto.categoria)) {
-          return producto.categoria.includes(this.categoriaSeleccionada);
-        } else {
-          return producto.categoria === this.categoriaSeleccionada;
+        const cat = producto.category;
+        if (Array.isArray(cat)) {
+          return cat.includes(this.categoriaSeleccionada);
         }
+        return cat === this.categoriaSeleccionada;
       });
     }
   }
-
 }

@@ -73,8 +73,6 @@ app.post('/api/login', async (req, res) => {
 app.put('/api/perfil', async (req, res) => {
   try {
     const dadesRaw = req.body;
-
-
     const dadesNetes = JSON.parse(JSON.stringify(dadesRaw));
 
     console.log("Dades netes que intentem guardar:", dadesNetes);
@@ -88,34 +86,32 @@ app.put('/api/perfil', async (req, res) => {
 
     res.json({ missatge: "Perfil actualitzat" });
   } catch (error) {
-
     console.error("error al servidor: ", error);
     res.status(500).send(error.message);
   }
 });
 
-//sendemail
+// sendemail
 app.post('/api/enviar-email', async (req, res) => {
   try {
     const { email, subject, message } = req.body;
     const htmlcorreo = `<!DOCTYPE html><html lang="ca"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Modificar Contrasenya</title><style>*{margin:0;padding:0;box-sizing:border-box}body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f4ff;font-family:sans-serif}.card{background:#fff;border-radius:16px;padding:48px 40px;text-align:center;max-width:380px;width:90%;box-shadow:0 4px 24px rgba(0,80,255,.08)}h1{font-size:1.6rem;color:#0a3880;margin-bottom:12px}p{color:#6b82b0;font-size:.95rem;margin-bottom:32px}.btn{display:inline-block;background:#1a5fe0;color:#fff !important;text-decoration:none;padding:14px 28px;border-radius:10px;font-size:1rem;font-weight:600;transition:background .2s}.btn:hover{background:#0a3880}</style></head><body><div class="card"><h1>Modificar Contrasenya</h1><p>Fes clic per canviar la teva contrasenya.</p><a href="http://localhost:4200/nuevacontrasenya?email=${encodeURIComponent(email)}" class="btn">Clica aquí per canviar la contrasenya</a></div></body></html>`
-    const verificorreu =   `<!DOCTYPE html><html lang="ca"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Codi Validació</title><style>*{margin:0;padding:0;box-sizing:border-box}body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f4ff;font-family:sans-serif}.card{background:#fff;border-radius:16px;padding:48px 40px;text-align:center;max-width:380px;width:90%;box-shadow:0 4px 24px rgba(0,80,255,.08)}h1{font-size:1.6rem;color:#0a3880;margin-bottom:12px}p{color:#6b82b0;font-size:.95rem;margin-bottom:32px}.message{color:#1a5fe0;font-size:2.5rem;font-weight:500}</style></head><body><div class="card"><h1>Codi Validació</h1><span class="message">${message}</span></div></body></html>`
+    const verificorreu = `<!DOCTYPE html><html lang="ca"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Codi Validació</title><style>*{margin:0;padding:0;box-sizing:border-box}body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f4ff;font-family:sans-serif}.card{background:#fff;border-radius:16px;padding:48px 40px;text-align:center;max-width:380px;width:90%;box-shadow:0 4px 24px rgba(0,80,255,.08)}h1{font-size:1.6rem;color:#0a3880;margin-bottom:12px}p{color:#6b82b0;font-size:.95rem;margin-bottom:32px}.message{color:#1a5fe0;font-size:2.5rem;font-weight:500}</style></head><body><div class="card"><h1>Codi Validació</h1><span class="message">${message}</span></div></body></html>`
     const mailOptions = {
-        from: "sporthubefi@gmail.com",
-        to: email,
-        subject: subject,
-        ...(message !== "" ? { html: verificorreu } : { html: htmlcorreo })
-      }
+      from: "sporthubefi@gmail.com",
+      to: email,
+      subject: subject,
+      ...(message !== "" ? { html: verificorreu } : { html: htmlcorreo })
+    }
 
     await transporter.sendMail(mailOptions);
-
     res.json({ missatge: "Email enviat correctament" });
-
   } catch (error) {
     console.error("Error enviant email:", error);
     res.status(500).send("Error enviant email");
   }
 });
+
 // check-email
 app.get('/api/check-email', async (req, res) => {
   try {
@@ -130,17 +126,47 @@ app.get('/api/check-email', async (req, res) => {
     res.status(500).send("Error al servidor");
   }
 });
-const {crearConfigBaseDades} = require("../app/db.config.js")
+
+const { crearConfigBaseDades } = require("../app/db.config.js");
 const dbp = crearConfigBaseDades();
-const {getmodelProductes} = require("./models/productes.js");
+const { getmodelProductes } = require("./models/productes.js");
 const Producte = getmodelProductes(dbp);
-const {getmodelaFactura} = require("./models/factura.js");
-const Factura = getmodelaFactura(dbp);
-const {getmodetallsfactura} = require("./models/detallfactura.js");
-const DetallFactura = getmodetallsfactura(dbp);
-dbp.sync().then(()=>{
-  console.log("Drop and re-sync db");
+
+dbp.sync().then(() => {
+  console.log("DB sincronitzada correctament");
+});
+
+// productes
+app.get('/api/productes', async (req, res) => {
+  try {
+    const where = {};
+    if (req.query.sexe) {
+      where.sexe = req.query.sexe;
+    }
+    const productes = await Producte.findAll({ where });
+    res.json(productes);
+  } catch (error) {
+    console.error("Error obtenint productes:", error);
+    res.status(500).send("Error obtenint productes");
+  }
+});
+app.get('/api/productes/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+
+    const producte = await Producte.findOne({
+      where: { id_productes: id }
+    });
+
+    if (!producte) {
+      return res.status(404).json({ message: "Producto no encontrado" });
+    }
+
+    res.json(producte);
+
+  } catch (error) {
+    console.error("Error obtenint producte per id:", error);
+    res.status(500).send("Error servidor");
+  }
 });
 app.listen(3000, () => console.log('Servidor corrent a http://localhost:3000'));
-
-

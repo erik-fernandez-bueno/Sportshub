@@ -12,19 +12,19 @@
 <div *ngIf="productosFiltrados.length > 0; else noProductos" class="catalogo">
   <div
     *ngFor="let producto of productosFiltrados"
-    [routerLink]="['/producto', producto.id]"
+    [routerLink]="['/producto', producto.id_productes]"
     class="catalogob"
   >
     <img
-      [ngSrc]="producto.imagen"
+      [src]="producto.image"
       width="300"
       height="300"
       class="card-img-top"
-      [alt]="producto.nombre"
+      [alt]="producto.name"
     >
     <div class="card-body">
-      <h5>{{ producto.nombre }}</h5>
-      <p>{{ producto.descripcion }}</p>
+      <h5>{{ producto.name }}</h5>
+      <p>{{ producto.description }}</p>
       <p class="precio">Precio: {{ producto.price }} €</p>
     </div>
   </div>
