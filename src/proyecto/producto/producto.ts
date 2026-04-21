@@ -18,6 +18,7 @@ export class ProductoComponent implements OnInit {
   product: any;
   selectedSize: string | null = null;
 
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -28,23 +29,30 @@ export class ProductoComponent implements OnInit {
 
   ngOnInit() {
 
-    const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    console.log('ID URL:', id);
+    const id = Number(this.route.snapshot.paramMap.get('id'));
 
     this.productesService.getProducteById(id).subscribe({
       next: (data) => {
         this.product = data;
-        console.log('PRODUCTO:', this.product);
         this.cgf.detectChanges();
       },
       error: (err) => console.error('Error:', err)
     });
+  }
 
+  get logueado(): boolean {
+    return !!localStorage.getItem('usuariLoguejat');
   }
 
   addToCart() {
+    const usuari = JSON.parse(localStorage.getItem('usuariLoguejat') || '{}');
+    const email = usuari?.email;
 
+    if (!email) {
+      alert('Has d\'iniciar sessió per poder comprar');
+      return;
+    }
     if (!this.product) return;
 
     if (this.product?.size?.length && !this.selectedSize) {

@@ -8,8 +8,6 @@
     <p>{{ product.description }}</p>
 
     <div class="opciones" *ngIf="product.size?.length > 0">
-
-
       <ng-container *ngFor="let s of product.size; let i = index">
         <input
           type="radio"
@@ -22,18 +20,20 @@
           {{ s }}
         </label>
       </ng-container>
-
     </div>
 
     <h2>{{ product.price }} €</h2>
 
-    <button (click)="addToCart()" [disabled]="product.size?.length > 0 && !selectedSize">
+    <button *ngIf="logueado" (click)="addToCart()" [disabled]="product.size?.length > 0 && !selectedSize">
       Afegir a la cistella
     </button>
 
-    <p *ngIf="product.size?.length > 0 && selectedSize">
+    <p *ngIf="logueado && product.size?.length > 0 && selectedSize">
       Talla seleccionada: {{ selectedSize }}
     </p>
+
+    <p *ngIf="!logueado">Inicia sessió per poder afegir productes a la cistella.</p>
+
   </div>
 
 </aside>

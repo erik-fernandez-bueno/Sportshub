@@ -25,6 +25,8 @@ export class RegisterComponent {
     email: '',
     adreca: '',
     telefon: '',
+    cesta: [],
+    admin: Boolean(false),
   };
 
   constructor(

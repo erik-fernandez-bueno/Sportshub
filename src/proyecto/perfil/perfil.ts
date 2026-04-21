@@ -6,7 +6,6 @@ import { AuthService } from '../auth.service';
 import {EmailService} from '../services/email';
 import {sendEmailVerification} from '@angular/fire/auth';
 
-
 @Component({
   selector: 'app-perfil',
   standalone: true,
@@ -20,7 +19,7 @@ export class PerfilComponent implements OnInit {
   mensaje: string = "";
 
   constructor(private router: Router, private authService: AuthService, private emailService: EmailService,
-  private cgf: ChangeDetectorRef) {}
+              private cgf: ChangeDetectorRef) {}
 
   ngOnInit() {
     const dades = localStorage.getItem('usuariLoguejat');
@@ -30,6 +29,7 @@ export class PerfilComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+
   restablir(){
     if (!this.usuari.email) {
       this.mensaje = "Escriu un email per restablir la contrasenya.";
@@ -53,6 +53,7 @@ export class PerfilComponent implements OnInit {
       }
     });
   }
+
   guardarCanvis() {
     this.authService.updatePerfil(this.usuari).subscribe({
       next: () => {
@@ -68,6 +69,6 @@ export class PerfilComponent implements OnInit {
   tancarSessio() {
     localStorage.removeItem('usuariLoguejat');
     this.authService.actualitzarUsuari(null);
-    this.router.navigate(['/login']);
+    window.location.href = '/login';
   }
 }

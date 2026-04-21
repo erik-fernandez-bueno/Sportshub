@@ -127,10 +127,47 @@ app.get('/api/check-email', async (req, res) => {
   }
 });
 
+// cesta - obtener
+app.get('/api/cesta/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    const doc = await db.collection('usuaris').doc(email).get();
+
+    if (!doc.exists) return res.status(404).send("Usuari no trobat");
+
+    const cesta = doc.data().cesta ?? [];
+    res.json(cesta);
+  } catch (error) {
+    console.error("Error obtenint cesta:", error);
+    res.status(500).send("Error al servidor");
+  }
+});
+
+// cesta - guardar/actualizar
+app.put('/api/cesta/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    const { cesta } = req.body;
+
+    if (!email) return res.status(400).send("Falta l'email");
+
+    await db.collection('usuaris').doc(email).set({ cesta }, { merge: true });
+
+    res.json({ missatge: "Cesta actualitzada correctament" });
+  } catch (error) {
+    console.error("Error actualitzant cesta:", error);
+    res.status(500).send("Error al servidor");
+  }
+});
+
 const { crearConfigBaseDades } = require("../app/db.config.js");
 const dbp = crearConfigBaseDades();
 const { getmodelProductes } = require("./models/productes.js");
+const { getmodelaFactura } = require("./models/factura.js");
+const { getmodetallsfactura } = require("./models/detallfactura.js");
 const Producte = getmodelProductes(dbp);
+const Factura = getmodelaFactura(dbp);
+const DetallFactura = getmodetallsfactura(dbp);
 
 dbp.sync().then(() => {
   console.log("DB sincronitzada correctament");
@@ -150,6 +187,7 @@ app.get('/api/productes', async (req, res) => {
     res.status(500).send("Error obtenint productes");
   }
 });
+
 app.get('/api/productes/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
@@ -169,4 +207,43 @@ app.get('/api/productes/:id', async (req, res) => {
     res.status(500).send("Error servidor");
   }
 });
+
+// comprar - guardar factura i detalls
+app.post('/api/comprar', async (req, res) => {
+  try {
+    const { email, cart } = req.body;
+
+    if (!email || !cart || cart.length === 0) {
+      return res.status(400).send("Falten dades de la compra");
+    }
+
+    // Obtenir el proper id de factura (max + 1)
+    const ultimaFactura = await Factura.findOne({
+      order: [['id_factures', 'DESC']]
+    });
+    const nouId = ultimaFactura ? ultimaFactura.id_factures + 1 : 1;
+
+    // Crear la factura
+    await Factura.create({
+      id_factures: nouId,
+      usuariemail: email,
+      data: new Date().toISOString().split('T')[0]
+    });
+
+    // Crear els detalls de la factura (un per producte)
+    const detalls = cart.map(item => ({
+      id_fact: nouId,
+      id_prod: item.id,
+      quantity: item.quantity ?? 1,
+      size: item.selectedSize
+    }));
+    await DetallFactura.bulkCreate(detalls);
+
+    res.json({ missatge: "Compra realitzada correctament", id_factura: nouId });
+  } catch (error) {
+    console.error("Error al processar la compra:", error);
+    res.status(500).send("Error al processar la compra");
+  }
+});
+
 app.listen(3000, () => console.log('Servidor corrent a http://localhost:3000'));

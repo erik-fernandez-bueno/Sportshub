@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService, CartProduct } from '../services/cart.service';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import {RouterLink} from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-cesta',
@@ -18,7 +19,7 @@ export class CestaComponent implements OnInit {
 
   cart: CartProduct[] = [];
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.cart = this.cartService.getCart();
@@ -37,23 +38,42 @@ export class CestaComponent implements OnInit {
   }
 
   buy() {
-    alert('Compra realizada correctamente');
-    this.cartService.clearCart();
-    this.cart = [];
+    const usuari = JSON.parse(localStorage.getItem('usuariLoguejat') || '{}');
+    const email = usuari?.email;
+
+    if (!email) {
+      alert('Has d\'iniciar sessió per poder comprar');
+      return;
+    }
+
+    this.http.post('http://localhost:3000/api/comprar', {
+      email,
+      cart: this.cart
+    }).subscribe({
+      next: () => {
+        alert('Compra realitzada correctament');
+        this.cartService.clearCart();
+        window.location.href = '/';
+      },
+      error: (err) => {
+        console.error('Error al comprar:', err);
+        alert('Hi ha hagut un error en processar la compra');
+      }
+    });
   }
+
   increaseQuantity(item: CartProduct) {
-    item.quantity++;
+    this.cartService.updateQuantity(item, item.quantity + 1);
   }
 
   decreaseQuantity(item: CartProduct) {
     if (item.quantity > 1) {
-      item.quantity--;
+      this.cartService.updateQuantity(item, item.quantity - 1);
     }
   }
 
   setQuantity(item: CartProduct, value: string) {
     const quantity = parseInt(value);
-    item.quantity = quantity > 0 ? quantity : 1;
+    this.cartService.updateQuantity(item, quantity > 0 ? quantity : 1);
   }
-
 }
