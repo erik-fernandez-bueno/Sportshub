@@ -4,7 +4,11 @@ const cors = require('cors');
 const nodemailer = require("nodemailer");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'x-user-email']
+}));
 app.use(express.json());
 
 const serviceAccount = require("./Novaclaveprivada.json");
@@ -245,5 +249,43 @@ app.post('/api/comprar', async (req, res) => {
     res.status(500).send("Error al processar la compra");
   }
 });
+
+Factura.hasMany(DetallFactura, { foreignKey: 'id_fact', as: 'detallfactures' });
+DetallFactura.belongsTo(Factura, { foreignKey: 'id_fact' });
+
+DetallFactura.belongsTo(Producte, { foreignKey: 'id_prod', as: 'producte' });
+Producte.hasMany(DetallFactura, { foreignKey: 'id_prod' });
+
+app.get('/api/historial', esAdmin, async (req, res) => {
+  try {
+    const historial = await Factura.findAll({
+      include: [{
+        model: DetallFactura,
+        as: 'detallfactures',
+        include: [{
+          model: Producte,
+          as: 'producte'
+        }]
+      }],
+      order: [['data', 'DESC']]
+    });
+    res.json(historial);
+  } catch (error) {
+    console.error("Error al carregar historial:", error);
+    res.status(500).send("Error al servidor");
+  }
+});
+
+async function esAdmin(req, res, next) {
+  const email = req.headers['x-user-email'];
+  if (!email) return res.status(403).send("Accés denegat");
+
+  const doc = await db.collection('usuaris').doc(email).get();
+  if (doc.exists && doc.data().admin === true) {
+    next();
+  } else {
+    res.status(403).send("No tens permisos d'administrador");
+  }
+}
 
 app.listen(3000, () => console.log('Servidor corrent a http://localhost:3000'));

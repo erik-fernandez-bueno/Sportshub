@@ -13,6 +13,7 @@ import { RegisterComponent } from '../proyecto/register/register';
 import {UnisexComponent} from '../proyecto/unisex/unisex';
 import {NenComponent} from '../proyecto/nen/nen';
 import {nuevacontrasenyaComponent} from '../proyecto/nuevacontrasenya/nuevacontrasenya';
+import {AdminHistorial} from '../proyecto/admin-historial/admin-historial';
 
 
 export const routes: Routes = [
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'nuevacontrasenya', component: nuevacontrasenyaComponent },
   { path: 'producto/:id', component: ProductoComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'historial', component: AdminHistorial },
   { path: '**', redirectTo: '' }
 ];
 

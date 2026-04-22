@@ -1,0 +1,38 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>Data</th>
+    <th>Usuari</th>
+    <th>Producte</th>
+    <th>Quantitat</th>
+    <th>Preu Unitari</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let factura of historial">
+    <tr *ngFor="let detall of factura.detallfactures">
+      <td>{{ factura.data }}</td>
+      <td>{{ factura.usuariemail }}</td>
+      <td>{{ detall.producte.name }}</td>
+      <td>{{ detall.quantity }}</td>
+      <td>{{ detall.producte.price }} €</td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="chart-container" style="margin-bottom: 30px;">
+  <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [xaxis]="chartOptions.xaxis"
+    [title]="chartOptions.title">
+  </apx-chart>
+</div>
+
+<table class="table">
+  ...
+</table>

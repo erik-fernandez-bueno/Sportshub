@@ -1,5 +1,5 @@
 const DataTypes = require('sequelize');
-const getmodetallsfactura = (db) => {
+const getmodetallsfactura =(db) => {
   return db.define('detallfactura', {
     id_fact: {
       type: DataTypes.INTEGER,
@@ -21,13 +21,11 @@ const getmodetallsfactura = (db) => {
     },
     quantity: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 1
+      allowNull: true
     },
     size: {
       type: DataTypes.JSON,
-      allowNull: true,
-      defaultValue: ""
+      allowNull: true
     }
   }, {
     tableName: 'detallfactura',

@@ -1,5 +1,5 @@
 const DataTypes = require('sequelize');
-const getmodelaFactura = (db) => {
+const getmodelaFactura =(db) =>  {
   return db.define('factura', {
     id_factures: {
       type: DataTypes.INTEGER,
