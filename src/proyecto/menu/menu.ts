@@ -18,9 +18,11 @@ import {HttpClient} from '@angular/common/http';
 })
 export class MenuComponent implements OnInit {
   usuariLoguejat: any = null;
+  esAdmin: boolean = false;
   tickerEvents: any[] = [];
   tickerDuration: string = '40s';
   private refreshInterval: any;
+  private usuariSubscription: any;
 
   constructor(private router: Router, private authService: AuthService,private http: HttpClient) {}
 
@@ -29,22 +31,26 @@ export class MenuComponent implements OnInit {
     this.carregarTickerEvents();
     // Refresh every 5 minutes
     this.refreshInterval = setInterval(() => this.carregarTickerEvents(), 5 * 60 * 1000);
+    this.usuariSubscription = this.authService.usuari$.subscribe(usuari => {
+      this.usuariLoguejat = usuari;
+      this.esAdmin = usuari?.admin === true;
+    });
   }
 
   ngOnDestroy() {
     if (this.refreshInterval) {
       clearInterval(this.refreshInterval);
     }
-
-    this.authService.usuari$.subscribe(usuari => {
-      this.usuariLoguejat = usuari;
-    });
+    if (this.usuariSubscription) {
+      this.usuariSubscription.unsubscribe();
+    }
   }
 
   comprovarSessio() {
     const dades = localStorage.getItem('usuariLoguejat');
     if (dades) {
       this.usuariLoguejat = JSON.parse(dades);
+      this.esAdmin = this.usuariLoguejat?.admin === true;
     }
   }
 

@@ -1,11 +1,10 @@
-
 <header>
   <a href="index.html"><img src="assets/logo.png" alt="" height="1024" width="1536">
     <h1>Sports Hub</h1>
   </a>
 </header>
 <nav>
-  <a [routerLink]="['/historial']">Historial</a>
+  <a [routerLink]="['/historial']" [class.invisible]="!esAdmin">Historial</a>
   <a [routerLink]="['/hombre']" [queryParams]="{id: 42}">Home</a>
   <a [routerLink]="['/mujer']">Dona</a>
   <a [routerLink]="['/nen']">Nen</a>

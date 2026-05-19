@@ -43,6 +43,11 @@ nav a {
   margin-left: 4%;
 }
 
+.invisible {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .nom-usuari {
   font-size: 1.3vw;
   font-weight: 600;
