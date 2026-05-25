@@ -1,14 +1,14 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import { HistorialService } from '../services/historial.service';
-import {NgForOf} from '@angular/common';
+import {NgForOf, CommonModule} from '@angular/common';
 import {Router} from '@angular/router';
-import { HttpHeaders } from '@angular/common/http';
 import { NgApexchartsModule, ChartComponent } from 'ng-apexcharts';
 
 @Component({
   selector: 'app-admin-historial',
+  standalone: true,
   imports: [
-    NgForOf,
+    CommonModule,
     NgApexchartsModule
   ],
   templateUrl: './admin-historial.html',
@@ -17,6 +17,9 @@ import { NgApexchartsModule, ChartComponent } from 'ng-apexcharts';
 export class AdminHistorial implements OnInit {
 
   historial: any[] = [];
+  totalVendes: string = '0.00';
+  totalProductesVenuts: number = 0;
+
   @ViewChild("chart") chart!: ChartComponent;
   public chartOptions: any;
 
@@ -27,9 +30,21 @@ export class AdminHistorial implements OnInit {
   ) {
     this.chartOptions = {
       series: [],
-      chart: { type: 'bar', height: 350 },
-      xaxis: { categories: [] },
-      title: { text: 'Vendes per dia' }
+      chart: {
+        type: 'bar',
+        height: 350,
+        toolbar: { show: false }
+      },
+      xaxis: {
+        categories: [],
+        labels: { style: { colors: '#6c757d' } }
+      },
+      title: {
+        text: 'Volum de Vendes per Data',
+        align: 'left',
+        style: { color: '#00205b', fontSize: '18px' }
+      },
+      dataLabels: { enabled: false }
     };
   }
 
@@ -38,7 +53,6 @@ export class AdminHistorial implements OnInit {
     const user = userString ? JSON.parse(userString) : null;
 
     if (!user || user.admin !== true) {
-      console.log("Accés denegat: usuari no autoritzat o no loguejat.");
       this.router.navigate(['/botiga']);
       return;
     }
@@ -46,6 +60,7 @@ export class AdminHistorial implements OnInit {
     this.historialService.getHistorial(user.email).subscribe({
       next: (data) => {
         this.historial = data;
+        this.calcularEstadistiques(data);
         this.prepararDadesGrafic(data);
         this.cgf.detectChanges();
       },
@@ -56,6 +71,21 @@ export class AdminHistorial implements OnInit {
     });
   }
 
+  calcularEstadistiques(data: any[]) {
+    let total = 0;
+    let productes = 0;
+
+    data.forEach(factura => {
+      factura.detallfactures.forEach((detall: any) => {
+        total += detall.quantity * detall.producte.price;
+        productes += detall.quantity;
+      });
+    });
+
+    this.totalVendes = total.toFixed(2);
+    this.totalProductesVenuts = productes;
+  }
+
   prepararDadesGrafic(data: any[]) {
     const dadesAgrupades = data.reduce((acc, curr) => {
       const dataStr = curr.data;
@@ -64,7 +94,15 @@ export class AdminHistorial implements OnInit {
       return acc;
     }, {});
 
-    this.chartOptions.series = [{ name: 'Unitats venudes', data: Object.values(dadesAgrupades) }];
-    this.chartOptions.xaxis = { categories: Object.keys(dadesAgrupades) };
+    const datesOrdenades = Object.keys(dadesAgrupades).sort();
+    const valorsOrdenats = datesOrdenades.map(date => dadesAgrupades[date]);
+
+    this.chartOptions.series = [{
+      name: 'Unitats venudes',
+      data: valorsOrdenats
+    }];
+    this.chartOptions.xaxis = {
+      categories: datesOrdenades
+    };
   }
 }

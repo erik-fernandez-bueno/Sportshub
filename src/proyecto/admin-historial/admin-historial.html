@@ -1,42 +1,64 @@
-<br><br><br>
+<div class="historial-container">
+  <div class="header-section">
+    <h2>Panell d'Administració: Historial de Vendes</h2>
+  </div>
 
-<h1> Historial </h1>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Total Vendes</h3>
+      <div class="value">{{ totalVendes }} €</div>
+    </div>
+    <div class="stat-card">
+      <h3>Comandes Totals</h3>
+      <div class="value">{{ historial.length }}</div>
+    </div>
+    <div class="stat-card">
+      <h3>Productes Venuts</h3>
+      <div class="value">{{ totalProductesVenuts }}</div>
+    </div>
+  </div>
 
-<table class="table">
-  <thead>
-  <tr>
-    <th>Data</th>
-    <th>Usuari</th>
-    <th>Producte</th>
-    <th>Quantitat</th>
-    <th>Preu Unitari</th>
-  </tr>
-  </thead>
-  <tbody>
-  <ng-container *ngFor="let factura of historial">
-    <tr *ngFor="let detall of factura.detallfactures">
-      <td>{{ factura.data }}</td>
-      <td>{{ factura.usuariemail }}</td>
-      <td>{{ detall.producte.name }}</td>
-      <td>{{ detall.quantity }}</td>
-      <td>{{ detall.producte.price }} €</td>
-    </tr>
-  </ng-container>
-  </tbody>
-</table>
+  <div class="chart-section">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [title]="chartOptions.title"
+      [colors]="['#003087']"
+      [stroke]="{ show: true, width: 2, colors: ['transparent'] }"
+      [plotOptions]="{ bar: { columnWidth: '45%', borderRadius: 4 } }">
+    </apx-chart>
+  </div>
 
-<br>
-<br>
-
-<div class="chart-container" style="margin-bottom: 30px;">
-  <apx-chart
-    [series]="chartOptions.series"
-    [chart]="chartOptions.chart"
-    [xaxis]="chartOptions.xaxis"
-    [title]="chartOptions.title">
-  </apx-chart>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Data</th>
+        <th>Usuari</th>
+        <th>Producte</th>
+        <th>Quantitat</th>
+        <th>Preu Unitari</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let factura of historial">
+        <tr *ngFor="let detall of factura.detallfactures">
+          <td><strong>{{ factura.data | date:'dd/MM/yyyy' }}</strong></td>
+          <td><span class="badge badge-email">{{ factura.usuariemail }}</span></td>
+          <td>
+            <div class="product-info">
+              <img [src]="detall.producte.image" class="product-img" alt="product">
+              <span>{{ detall.producte.name }}</span>
+            </div>
+          </td>
+          <td>{{ detall.quantity }}</td>
+          <td>{{ detall.producte.price }} €</td>
+          <td><span class="badge badge-price">{{ (detall.quantity * detall.producte.price).toFixed(2) }} €</span></td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
 </div>
-
-<table class="table">
-  ...
-</table>

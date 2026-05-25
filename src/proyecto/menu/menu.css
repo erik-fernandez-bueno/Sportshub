@@ -5,20 +5,26 @@ body {
 header {
   font-size: 1.3vw;
   margin-right: 6%;
-  height: 8%;
   width: 25%;
   float: left;
 }
-header img {
-  width: 12vw;
-  height: 8vw;
-  float: left;
-  margin-top: 1vw;
-}
+
 header a {
   text-decoration: none;
-  width: 30%;
   color: darkblue;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header img {
+  width: 8vw;
+  height: 7vw;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 3vw;
 }
 #img_cesta {
   height: 3.7vw;
