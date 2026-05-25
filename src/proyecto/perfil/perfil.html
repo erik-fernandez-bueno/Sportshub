@@ -13,7 +13,20 @@
       <p><strong>Telèfon:</strong> {{ usuari.telefon }} </p>
       <p><strong>Email:</strong> {{ usuari.email }} </p>
       <button class="profilebutton" (click)="editant = true">Editar perfil</button>
-      <button (click)="restablir()" class="registerformsectionbutton" type="submit"> Restablir contrasenya </button>
+      <button (click)="restablir()" class="profilebutton" type="submit"> Restablir contrasenya </button>
+
+      <div style="margin-top: 20px;">
+        <button (click)="mostrarReview = !mostrarReview" class="profilebutton"> Fer una review </button>
+        <div *ngIf="mostrarReview" style="margin-top: 10px;">
+          <textarea [(ngModel)]="reviewText" class="registerformsectioninput" style="height: 100px; width: 30%;" placeholder="Escriu la teva review aquí..."></textarea>
+
+          <div style="margin-top: 10px;">
+            <app-puzzle-captcha (verified)="onCaptchaVerified($event)"></app-puzzle-captcha>
+          </div>
+
+          <button (click)="enviarReview()" class="profilebutton" style="margin-top: 10px;"> Enviar </button>
+        </div>
+      </div>
 
     </div>
 

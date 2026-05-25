@@ -131,6 +131,37 @@ app.get('/api/check-email', async (req, res) => {
   }
 });
 
+const fs = require('fs');
+const path = require('path');
+
+app.post('/api/review', (req, res) => {
+  try {
+    const { email, review } = req.body;
+    if (!review) {
+      return res.status(400).send("La review no pot estar buida");
+    }
+
+    const reviewsDir = path.join(__dirname, 'reviews');
+    if (!fs.existsSync(reviewsDir)) {
+      fs.mkdirSync(reviewsDir);
+    }
+
+    const timestamp = new Date().getTime();
+    const userClean = (email || 'anonim').replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    const fileName = `review_${userClean}_${timestamp}.txt`;
+    const filePath = path.join(reviewsDir, fileName);
+
+    const reviewData = `Data: ${new Date().toISOString()}\nUsuari: ${email || 'Anònim'}\nReview: ${review}\n`;
+
+    fs.writeFileSync(filePath, reviewData, 'utf8');
+    console.log(`Review guardada al fitxer: ${fileName}`);
+    res.json({ missatge: "Review guardada correctament", fitxer: fileName });
+  } catch (error) {
+    console.error("Error al guardar la review:", error);
+    res.status(500).send("Error al servidor en guardar la review");
+  }
+});
+
 // cesta - obtener
 app.get('/api/cesta/:email', async (req, res) => {
   try {
