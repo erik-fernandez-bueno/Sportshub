@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {NgOptimizedImage} from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {AuthService} from '../auth.service';
-import {HttpClient} from '@angular/common/http';
+import { AuthService } from '../auth.service';
+import { HttpClient } from '@angular/common/http';
+import { ChatbotComponent } from '../chatbot.component/chatbot.component';
 
 @Component({
   selector: 'app-menu',
   imports: [
     CommonModule,
     RouterLink,
-    RouterModule
+    RouterModule,
+    ChatbotComponent
   ],
   templateUrl: './menu.html',
   styleUrl: './menu.css',
@@ -24,7 +25,7 @@ export class MenuComponent implements OnInit {
   private refreshInterval: any;
   private usuariSubscription: any;
 
-  constructor(private router: Router, private authService: AuthService,private http: HttpClient) {}
+  constructor(private router: Router, private authService: AuthService, private http: HttpClient) {}
 
   ngOnInit() {
     this.comprovarSessio();
@@ -56,10 +57,6 @@ export class MenuComponent implements OnInit {
 
   carregarTickerEvents() {
     const leagueIds = [4328, 4335, 4331, 4346, 4480];
-    const requests = leagueIds.map(id =>
-      this.http.get<any>(`https://www.thesportlosdb.com/api/v1/json/123/eventspastleague.php?id=${id}&e=15`)
-    );
-
     this.fetchLeagues(leagueIds);
   }
 

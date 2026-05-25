@@ -23,7 +23,6 @@
       <img id="img_sesion" src="./assets/inicio_sesion.png" alt="Login" height="800" width="800">
     </a>
   </ng-template>
-
 </nav>
 
 <div class="sports-ticker" *ngIf="tickerEvents.length > 0">
@@ -50,3 +49,6 @@
     </div>
   </div>
 </div>
+
+<!-- Chatbot: solo visible si hay usuario logueado -->
+<app-chatbot *ngIf="usuariLoguejat"></app-chatbot>

@@ -1,0 +1,101 @@
+<!-- Botón flotante para abrir el chat -->
+<button class="chat-fab" (click)="toggleChat()" [class.active]="isOpen" aria-label="Abrir asistente">
+  <span class="fab-icon fab-icon-open">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.03 2 11c0 2.68 1.18 5.09 3.07 6.79L4 21l3.5-1.5A10.1 10.1 0 0 0 12 20c5.52 0 10-4.03 10-9s-4.48-9-10-9z" fill="currentColor"/>
+      <circle cx="8" cy="11" r="1.2" fill="white"/>
+      <circle cx="12" cy="11" r="1.2" fill="white"/>
+      <circle cx="16" cy="11" r="1.2" fill="white"/>
+    </svg>
+  </span>
+  <span class="fab-icon fab-icon-close">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+  </span>
+  <span class="fab-badge" *ngIf="!isOpen && messages.length > 1">{{ messages.length - 1 }}</span>
+</button>
+
+<!-- Ventana del chat -->
+<div class="chat-window" [class.open]="isOpen">
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="bot-avatar">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" fill="url(#botGrad)"/>
+          <path d="M12 22c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="16" cy="18" r="2" fill="white"/>
+          <circle cx="24" cy="18" r="2" fill="white"/>
+          <rect x="18" y="10" width="4" height="3" rx="1" fill="white"/>
+          <circle cx="20" cy="10" r="1" fill="white"/>
+          <defs>
+            <linearGradient id="botGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#1a5fe0"/>
+              <stop offset="100%" stop-color="#00205b"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div>
+        <span class="bot-name">Sports Hub AI</span>
+        <span class="bot-status">
+          <span class="status-dot"></span>
+          En línea
+        </span>
+      </div>
+    </div>
+    <div class="chat-header-actions">
+      <button class="header-btn" (click)="clearChat()" title="Limpiar chat">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="header-btn" (click)="toggleChat()" title="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mensajes -->
+  <div class="chat-messages" #messagesContainer>
+    <ng-container *ngFor="let msg of messages">
+      <div class="message-wrapper" [class.user-wrapper]="msg.role === 'user'">
+        <div class="message" [class.user-message]="msg.role === 'user'" [class.bot-message]="msg.role === 'assistant'">
+          <span class="message-text">{{ msg.content }}</span>
+          <span class="message-time">{{ formatTime(msg.timestamp) }}</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Typing indicator -->
+    <div class="message-wrapper" *ngIf="isLoading">
+      <div class="message bot-message typing-indicator">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="chat-input-area">
+    <div class="input-wrapper">
+      <textarea
+        #inputField
+        class="chat-input"
+        [(ngModel)]="userInput"
+        (keydown)="onKeyDown($event)"
+        placeholder="Escribe tu pregunta..."
+        rows="1"
+        [disabled]="isLoading"
+      ></textarea>
+      <button class="send-btn" (click)="sendMessage()" [disabled]="isLoading || !userInput.trim()">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <p class="powered-by">Powered by Groq · Llama 3</p>
+  </div>
+</div>

@@ -33,7 +33,7 @@
     "@teachablemachine/image": "^0.8.5",
     "@teachablemachine/pose": "^0.8.6",
     "@tensorflow/tfjs": "^4.22.0",
-    "apexcharts": "^5.10.6",
+    "apexcharts": "^5.13.0",
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
     "express": "^5.2.1",

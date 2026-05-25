@@ -30,6 +30,92 @@ app.get('/api/test', (req, res) => {
   res.send("El servidor respon correctament!");
 });
 
+// =============================================
+// GROQ CHAT PROXY
+// Posa la teva API key de Groq aquí o en .env:
+//   GROQ_API_KEY=gsk_xxxxxxxxxxxx
+// =============================================
+const GROQ_API_KEY = process.env.GROQ_API_KEY || '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';
+const GROQ_MODEL   = 'llama-3.3-70b-versatile';
+
+const SYSTEM_PROMPT = `Eres el asistente virtual de Sports Hub, una tienda online de ropa y equipamiento deportivo.
+Ayudas a los usuarios con:
+- Información sobre productos: ropa para hombre, mujer, niño y colecciones unisex
+- Proceso de compra: cómo añadir al carrito, cómo comprar
+- Gestión de cuenta: registro, login, perfil, cambio de contraseña
+- Historial de pedidos y facturas
+- Información sobre tallas y disponibilidad
+- Soporte general de la tienda
+
+Responde siempre en el mismo idioma que el usuario (español, catalán, inglés, etc.).
+Sé amable, conciso y profesional. Si no sabes algo específico sobre un producto concreto, invita al usuario a explorar la tienda.
+No inventes precios ni stock concreto que no conozcas.`;
+
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { messages, usuari } = req.body;
+
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      return res.status(400).json({ error: 'messages ha de ser un array no buit' });
+    }
+
+    // Build dynamic system prompt with logged-in user context
+    const userCtx = usuari ? `L'usuari es diu ${usuari.nom} (${usuari.email}).` : '';
+    const systemPrompt = `Ets l'assistent virtual de Sports Hub, una botiga online de roba i equipament esportiu.
+${userCtx}
+Ajudes amb productes (home, dona, nen, unisex), procés de compra, cistella, compte d'usuari i historial de comandes.
+Respon sempre en l'idioma de l'usuari. Sigues amable, concís i professional.`;
+
+    // Strip extra fields, keep only role+content, remove leading assistant messages
+    const cleaned = messages
+      .map(m => ({ role: m.role, content: String(m.content || '') }))
+      .filter(m => m.role === 'user' || m.role === 'assistant')
+      .filter(m => m.content.trim() !== '');
+
+    // Drop leading assistant messages so array always starts with 'user'
+    const firstUser = cleaned.findIndex(m => m.role === 'user');
+    const safeMessages = firstUser >= 0 ? cleaned.slice(firstUser).slice(-12) : [];
+
+    if (safeMessages.length === 0) {
+      return res.status(400).json({ error: 'No hi ha missatges d\'usuari vàlids' });
+    }
+
+    console.log(`[/api/chat] ${usuari?.nom ?? 'anon'} — ${safeMessages.length} msgs`);
+
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${GROQ_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: GROQ_MODEL,
+        max_tokens: 512,
+        temperature: 0.7,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          ...safeMessages
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('[/api/chat] Groq error:', response.status, errText);
+      return res.status(502).json({ error: errText });
+    }
+
+    const data = await response.json();
+    const reply = data.choices?.[0]?.message?.content ?? 'No he pogut generar una resposta.';
+    console.log('[/api/chat] OK —', reply.length, 'chars');
+    res.json({ reply });
+
+  } catch (error) {
+    console.error('[/api/chat] Error:', error);
+    res.status(500).json({ error: 'Error intern del servidor' });
+  }
+});
+
 // register
 app.post('/api/register', async (req, res) => {
   try {
@@ -252,20 +338,17 @@ app.post('/api/comprar', async (req, res) => {
       return res.status(400).send("Falten dades de la compra");
     }
 
-    // Obtenir el proper id de factura (max + 1)
     const ultimaFactura = await Factura.findOne({
       order: [['id_factures', 'DESC']]
     });
     const nouId = ultimaFactura ? ultimaFactura.id_factures + 1 : 1;
 
-    // Crear la factura
     await Factura.create({
       id_factures: nouId,
       usuariemail: email,
       data: new Date().toISOString().split('T')[0]
     });
 
-    // Crear els detalls de la factura (un per producte)
     const detalls = cart.map(item => ({
       id_fact: nouId,
       id_prod: item.id,
